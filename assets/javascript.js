@@ -9,6 +9,7 @@ var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 var labelIndex = 0;
 var markers = [];
 var map, infoWindow;
+
 function initMap() {
 	
 
@@ -135,7 +136,15 @@ function initMap() {
         });
         markers.push(marker);
         //always open popup div
-        infowindow.open(map, marker);
+        infowindow.open(map, marker); 
+        $("#bodyContent").empty();
+        $("#bodyContent").append("<h4>hello</h4>");
+        
+        $("button").on("click", function (event) {
+            event.preventDefault();
+
+       
+       });
     }
 	
 	
@@ -143,26 +152,23 @@ function initMap() {
     console.log(markers)
 
     var contentString = '<div id="content">' +
-        '<div id="siteNotice">' +
         '</div>' +
-        '<h1 id="firstHeading" class="firstHeading">Hey</h1>' +
-        '<div id="bodyContent">' +
-        '<p><b>Here we could put imgaes</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
-        'frederick is a poopy head ' +
-        'brenton is a big dumb dumb, ' +
-        'clark is cool though ' +
-        'Heritage Site.</p>' +
-        '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">' +
-        'https://en.wikipedia.org/w/index.php?title=Uluru</a> ' +
-        '(last visited June 22, 2009).</p>' +
+        '<form class="form-inline">' +
+        '<divclass="input-group">'+
+        '<input type="text"class="form-control" id="exampleInputAmount" placeholder="Name of PIN">'+
+        '<button type="submit" class="btn btn-primary btn-xs"> Save </button>'+
+        '</div>'+
+        '</form>'+
+        '<div id="bodyContent">' + 
         '</div>' +
         '</div>';
 
     var infowindow = new google.maps.InfoWindow({
         content: contentString,
-        maxWidth: 200
+        maxWidth: 250
     });
 
+    
 
 //---------- GEO LOCATION 
 

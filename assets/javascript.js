@@ -127,9 +127,12 @@ function initMap() {
     console.log(markers)
 
     var contentString = '<div id="content">' +
-        '<div id="siteNotice">' +
         '</div>' +
-        '<h1 id="firstHeading" class="firstHeading">Hey</h1>' +
+        '<form class="form-inline">' +
+        '<divclass="input-group">'+
+        '<input type="text"class="form-control" id="exampleInputAmount" placeholder="Name of PIN">'+
+        '</div>'+
+        '</form>'+
         '<div id="bodyContent">' +
         '<p><b>Here we could put imgaes</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
         'sandstone rock formation in the southern part of the ' +
@@ -141,12 +144,18 @@ function initMap() {
         '(last visited June 22, 2009).</p>' +
         '</div>' +
         '</div>';
-
+        /*<form class="form-inline">
+        <div class="input-group">
+          <input type="text" class="form-control" id="exampleInputAmount" placeholder="Name of PIN">
+        </div>
+      <button type="submit" class="btn btn-primary">Save</button>
+    </form>*/
     var infowindow = new google.maps.InfoWindow({
         content: contentString,
-        maxWidth: 200
+        maxWidth: 250
     });
 
+    
 
 //---------- GEO LOCATION 
 

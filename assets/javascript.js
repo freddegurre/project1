@@ -9,6 +9,7 @@ var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 var labelIndex = 0;
 var markers = [];
 var map, infoWindow;
+
 function initMap() {
     // Styles a map in night mode.
     var map = new google.maps.Map(document.getElementById('map'), {
@@ -121,7 +122,15 @@ function initMap() {
         });
         markers.push(marker);
         //always open popup div
-        infowindow.open(map, marker);
+        infowindow.open(map, marker); 
+        $("#bodyContent").empty();
+        $("#bodyContent").append("<h4>hello</h4>");
+        
+        $("button").on("click", function (event) {
+            event.preventDefault();
+
+       
+       });
     }
 
     console.log(markers)
@@ -131,25 +140,13 @@ function initMap() {
         '<form class="form-inline">' +
         '<divclass="input-group">'+
         '<input type="text"class="form-control" id="exampleInputAmount" placeholder="Name of PIN">'+
+        '<button type="submit" class="btn btn-primary btn-xs"> Save </button>'+
         '</div>'+
         '</form>'+
-        '<div id="bodyContent">' +
-        '<p><b>Here we could put imgaes</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
-        'sandstone rock formation in the southern part of the ' +
-        'Aboriginal people of the area. It has many springs, waterholes, ' +
-        'rock caves and ancient paintings. Uluru is listed as a World ' +
-        'Heritage Site.</p>' +
-        '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">' +
-        'https://en.wikipedia.org/w/index.php?title=Uluru</a> ' +
-        '(last visited June 22, 2009).</p>' +
+        '<div id="bodyContent">' + 
         '</div>' +
         '</div>';
-        /*<form class="form-inline">
-        <div class="input-group">
-          <input type="text" class="form-control" id="exampleInputAmount" placeholder="Name of PIN">
-        </div>
-      <button type="submit" class="btn btn-primary">Save</button>
-    </form>*/
+
     var infowindow = new google.maps.InfoWindow({
         content: contentString,
         maxWidth: 250

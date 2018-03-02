@@ -10,10 +10,16 @@ var labelIndex = 0;
 var markers = [];
 var map, infoWindow;
 function initMap() {
+	
+
+	
     // Styles a map in night mode.
     var map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 40.674, lng: -73.945 },
         zoom: 14,
+		
+
+		
         //just to get map black from herer!!! 
         styles: [
             { elementType: 'geometry', stylers: [{ color: '#242f3e' }] },
@@ -115,12 +121,22 @@ function initMap() {
             map: map,
             //icon: image 
         });
+		
+		// this deletes one marker. we need to change the event listener
+		google.maps.event.addListener(marker, 'click', function(event) {
+          this.setMap(null);
+          });
+  
+          markers.setMap(null);
+		
         marker.addListener('click', function () {
             infowindow.open(map, marker);
         });
         markers.push(marker);
 
     }
+	
+	
 
     console.log(markers)
 
@@ -130,9 +146,9 @@ function initMap() {
         '<h1 id="firstHeading" class="firstHeading">Hey</h1>' +
         '<div id="bodyContent">' +
         '<p><b>Here we could put imgaes</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
-        'sandstone rock formation in the southern part of the ' +
-        'Aboriginal people of the area. It has many springs, waterholes, ' +
-        'rock caves and ancient paintings. Uluru is listed as a World ' +
+        'frederick is a poopy head ' +
+        'brenton is a big dumb dumb, ' +
+        'clark is cool though ' +
         'Heritage Site.</p>' +
         '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">' +
         'https://en.wikipedia.org/w/index.php?title=Uluru</a> ' +
@@ -146,7 +162,7 @@ function initMap() {
     });
 
 
-
+	
     // Try HTML5 geolocation.
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
@@ -166,7 +182,11 @@ function initMap() {
         // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());
     }
+    
+		
 }
+
+	
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.setPosition(pos);
@@ -175,3 +195,4 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         'Error: Your browser doesn\'t support geolocation.');
     infoWindow.open(map);
 }
+

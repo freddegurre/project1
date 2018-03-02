@@ -11,10 +11,16 @@ var markers = [];
 var map, infoWindow;
 
 function initMap() {
+	
+
+	
     // Styles a map in night mode.
     var map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 40.674, lng: -73.945 },
         zoom: 14,
+		
+
+		
         //just to get map black from herer!!! 
         styles: [
             { elementType: 'geometry', stylers: [{ color: '#242f3e' }] },
@@ -117,6 +123,14 @@ function initMap() {
             map: map,
             //icon: image 
         });
+		
+		// this deletes one marker. we need to change the event listener
+		google.maps.event.addListener(marker, 'click', function(event) {
+          this.setMap(null);
+          });
+  
+          markers.setMap(null);
+		
         marker.addListener('click', function () {
             infowindow.open(map, marker);
         });
@@ -132,6 +146,8 @@ function initMap() {
        
        });
     }
+	
+	
 
     console.log(markers)
 
@@ -175,7 +191,11 @@ function initMap() {
         // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());
     }
+    
+		
 }
+
+	
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.setPosition(pos);
@@ -184,3 +204,4 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         'Error: Your browser doesn\'t support geolocation.');
     infoWindow.open(map);
 }
+

@@ -102,13 +102,14 @@ function initMap() {
     // This event listener calls addMarker() when the map is clicked.
     google.maps.event.addListener(map, 'click', function (event) {
         addMarker(event.latLng, map);
+        
     });
 
     // Adds a marker to the map.
     function addMarker(location, map) {
         // Add the marker at the clicked location, and add the next-available label
         // from the array of alphabetical characters.
-         //var image = ("imgages/Chicken_sombrero.gif")
+        //var image = ("imgages/Chicken_sombrero.gif")
         var marker = new google.maps.Marker({
             position: location,
             label: labels[labelIndex++ % labels.length],
@@ -119,7 +120,8 @@ function initMap() {
             infowindow.open(map, marker);
         });
         markers.push(marker);
-
+        //always open popup div
+        infowindow.open(map, marker);
     }
 
     console.log(markers)
@@ -146,6 +148,7 @@ function initMap() {
     });
 
 
+//---------- GEO LOCATION 
 
     // Try HTML5 geolocation.
     if (navigator.geolocation) {

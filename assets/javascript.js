@@ -9,10 +9,11 @@ var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 var labelIndex = 0;
 var markers = [];
 var map, infoWindow;
+var infoWindows = [];
 var image;
 
-function initMap() {
 
+function initMap() {
 
 
     // Styles a map in night mode.
@@ -22,7 +23,7 @@ function initMap() {
 
 
 
-        //just to get map black from herer!!! 
+        //just to get map black from here!!! 
         styles: [
             { elementType: 'geometry', stylers: [{ color: '#242f3e' }] },
             { elementType: 'labels.text.stroke', stylers: [{ color: '#242f3e' }] },
@@ -115,24 +116,19 @@ function initMap() {
 
     // Adds a marker to the map.
     function addMarker(location, map) {
-        // Add the marker at the clicked location, and add the next-available label
-        // from the array of alphabetical characters.
-        //var image = ("imgages/Chicken_sombrero.gif")
+        // Add the marker at the clicked location,
 
+        //the query for the emojis. 
         var queryUrl = "https://www.emojidex.com/api/v1/emoji/";
-
+        //call the query
         $.ajax({
             method: "GET",
             url: queryUrl
         }).then(function (response) {
-            console.log(response.emoji);
 
             for (i = 0; i < response.emoji.length; i++) {
-                console.log("emoji: " + response.emoji[i].moji);
-
+               
                 var emojiDiv = $("<div class='setEmoji'>");
-
-                console.log("emoji: " + response.emoji[i]);
 
                 if (response.emoji[i].moji) {
                     emojiDiv.append(response.emoji[i].moji);
@@ -155,7 +151,7 @@ function initMap() {
                 position: location,
                 label: image,
                 map: map,
-                icon: "grhhrg"
+                icon: "null"
 
             });
 
@@ -165,7 +161,7 @@ function initMap() {
             position: location,
             label: image,
             map: map,
-            icon: "grhhrg"
+            icon: "null"
 
         });
 
@@ -183,17 +179,21 @@ function initMap() {
         //always open popup div
         infowindow.open(map, marker);
         $("#bodyContent").empty();
-        $("#bodyContent").append("<h4>hello</h4>");
+        $(".subHeader").html("<h5>Describe this spot!</h5>");
 
         $("#pinName").on("click", function (event) {
             event.preventDefault()
             //store the value that user input in the topic-input form
-            var pinName = $("#input").val()
+            var pinName = $("#input").val().trim();
             //push the value to topics array
             console.log(pinName);
             $("#namePin").html("<h3>" + pinName + "</h3>");
-            //call the renderbuttons function so that new button is created. 
-        })
+            var description = $("#description").val().trim();
+            $("#description").hide();
+            $(".subHeader").html("<h5>" + description + "</h5>");
+            infoWindows.push(infowindow);
+            console.log(infoWindows);
+        });
 
     }
 
@@ -207,16 +207,19 @@ function initMap() {
     var contentString = '<div id="content">' +
         '</div>' +
         '<div id="namePin">' +
-        '<form class="form-inline">' +
-        '<divclass="input-group">' +
-        '<input type="text" class="form-control" id="input" placeholder="Name of PIN">' +
-        '<button type="submit" class="btn btn-primary btn-xs" id="pinName"> Save </button>' +
+            '<form class="form-inline">' +
+                '<divclass="input-group">' +
+                    '<input type="text" class="form-control" id="input" placeholder="Name of PIN">' +
+                 '</div>' +
+            '</form>' +
         '</div>' +
-        '</form>' +
-        '</div>' +
+        '<div class="subHeader">'+
+        '</div>'+
+        '<textarea class="form-control" id="description" rows="3"></textarea>'+
         '<div id="bodyContent">' +
         '</div>' +
-        '<button type="submit" class="btn btn-primary btn-xs" id="delete"> Delete </button>' +
+        '<button type="submit" class="btn btn-danger btn-xs" id="delete"> Delete </button>' +
+        '<button type="submit" class="btn btn-primary btn-xs" id="pinName"> Save </button>'
         '</div>';
 
     var infowindow = new google.maps.InfoWindow({
@@ -238,7 +241,7 @@ function initMap() {
             };
 
             infoWindow.setPosition(pos);
-            infoWindow.setContent('Location found.');
+            infoWindow.setContent('Curret location.');
             infoWindow.open(map);
             map.setCenter(pos);
         }, function () {

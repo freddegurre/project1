@@ -9,18 +9,19 @@ var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 var labelIndex = 0;
 var markers = [];
 var map, infoWindow;
+var image;
 
 function initMap() {
-	
 
-	
+
+
     // Styles a map in night mode.
     var map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 40.674, lng: -73.945 },
         zoom: 14,
-		
 
-		
+
+
         //just to get map black from herer!!! 
         styles: [
             { elementType: 'geometry', stylers: [{ color: '#242f3e' }] },
@@ -109,7 +110,7 @@ function initMap() {
     // This event listener calls addMarker() when the map is clicked.
     google.maps.event.addListener(map, 'click', function (event) {
         addMarker(event.latLng, map);
-        
+
     });
 
     // Adds a marker to the map.
@@ -117,50 +118,105 @@ function initMap() {
         // Add the marker at the clicked location, and add the next-available label
         // from the array of alphabetical characters.
         //var image = ("imgages/Chicken_sombrero.gif")
+
+        var queryUrl = "https://www.emojidex.com/api/v1/emoji/";
+
+        $.ajax({
+            method: "GET",
+            url: queryUrl
+        }).then(function (response) {
+            console.log(response.emoji);
+
+            for (i = 0; i < response.emoji.length; i++) {
+                console.log("emoji: " + response.emoji[i].moji);
+
+                var emojiDiv = $("<div class='setEmoji'>");
+
+                console.log("emoji: " + response.emoji[i]);
+
+                if (response.emoji[i].moji) {
+                    emojiDiv.append(response.emoji[i].moji);
+                    $("#bodyContent").append(emojiDiv);
+                    emojiDiv.attr("data-emoji", response.emoji[i].moji)
+
+
+                }
+
+            }
+        });
+
+
+        //"https://food.fnr.sndimg.com/content/dam/images/food/fullset/2010/5/1/0/0039592F3_beer-can-chicken_s4x3.jpg.rend.hgtvcom.616.462.suffix/1382539274625.jpeg"
+        $(document).on("click", ".setEmoji", function () {
+            image = $(this).attr("data-emoji");
+            console.log(image)
+
+            var marker = new google.maps.Marker({
+                position: location,
+                label: image,
+                map: map,
+                icon: "grhhrg"
+
+            });
+
+        });
+
         var marker = new google.maps.Marker({
             position: location,
-            label: labels[labelIndex++ % labels.length],
+            label: image,
             map: map,
-            //icon: image 
+            icon: "grhhrg"
+
         });
-		
-		// this deletes one marker. we need to change the event listener
-		google.maps.event.addListener(marker, 'click', function(event) {
-          this.setMap(null);
-          });
-  
-          markers.setMap(null);
-		
+
+        // this deletes one marker. we need to change the event listener
+        google.maps.event.addListener(marker, 'click', function (event) {
+            this.setMap(null);
+        });
+
+
+
         marker.addListener('click', function () {
             infowindow.open(map, marker);
         });
         markers.push(marker);
         //always open popup div
-        infowindow.open(map, marker); 
+        infowindow.open(map, marker);
         $("#bodyContent").empty();
         $("#bodyContent").append("<h4>hello</h4>");
-        
-        $("button").on("click", function (event) {
-            event.preventDefault();
 
-       
-       });
+        $("#pinName").on("click", function (event) {
+            event.preventDefault()
+            //store the value that user input in the topic-input form
+            var pinName = $("#input").val()
+            //push the value to topics array
+            console.log(pinName);
+            $("#namePin").html("<h3>" + pinName + "</h3>");
+            //call the renderbuttons function so that new button is created. 
+        })
+
     }
-	
-	
+
+
+    //$("#")
+
+
 
     console.log(markers)
 
     var contentString = '<div id="content">' +
         '</div>' +
+        '<div id="namePin">' +
         '<form class="form-inline">' +
-        '<divclass="input-group">'+
-        '<input type="text"class="form-control" id="exampleInputAmount" placeholder="Name of PIN">'+
-        '<button type="submit" class="btn btn-primary btn-xs"> Save </button>'+
-        '</div>'+
-        '</form>'+
-        '<div id="bodyContent">' + 
+        '<divclass="input-group">' +
+        '<input type="text" class="form-control" id="input" placeholder="Name of PIN">' +
+        '<button type="submit" class="btn btn-primary btn-xs" id="pinName"> Save </button>' +
         '</div>' +
+        '</form>' +
+        '</div>' +
+        '<div id="bodyContent">' +
+        '</div>' +
+        '<button type="submit" class="btn btn-primary btn-xs" id="delete"> Delete </button>' +
         '</div>';
 
     var infowindow = new google.maps.InfoWindow({
@@ -168,9 +224,10 @@ function initMap() {
         maxWidth: 250
     });
 
-    
 
-//---------- GEO LOCATION 
+
+
+    //---------- GEO LOCATION 
 
     // Try HTML5 geolocation.
     if (navigator.geolocation) {
@@ -191,11 +248,11 @@ function initMap() {
         // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());
     }
-    
-		
+
+
 }
 
-	
+
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.setPosition(pos);

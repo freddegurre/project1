@@ -5,12 +5,13 @@
 // prompted by your browser. If you see the error "The Geolocation service
 // failed.", it means you probably did not give permission for the browser to
 // locate you.
-var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-var labelIndex = 0;
+//var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+//var labelIndex = 0;
 var markers = [];
 var map, infoWindow;
 var infoWindows = [];
 var image;
+var uniqueId = 1;
 
 
 function initMap() {
@@ -118,66 +119,76 @@ function initMap() {
     function addMarker(location, map) {
         // Add the marker at the clicked location,
 
-        //the query for the emojis. 
-        var queryUrl = "https://www.emojidex.com/api/v1/emoji/";
-        //call the query
-        $.ajax({
-            method: "GET",
-            url: queryUrl
-        }).then(function (response) {
+                //the query for the emojis. 
+                var queryUrl = "https://www.emojidex.com/api/v1/emoji/";
+                //call the query
+                $.ajax({
+                    method: "GET",
+                    url: queryUrl
+                }).then(function (response) {
+                    //for each emoji in response
+                    for (i = 0; i < response.emoji.length; i++) {
+                    //create div and give it class 
+                        var emojiDiv = $("<div class='setEmoji'>");
+                        //check if there is actual emoji in the response
+                        if (response.emoji[i].moji) {
+                            //append the emoji to the emojiDiv 
+                            emojiDiv.append(response.emoji[i].moji);
+                            //append the emoji div to body content. 
+                            $("#bodyContent").append(emojiDiv);
+                            //set the data attribute equal to emoji 
+                            emojiDiv.attr("data-emoji", response.emoji[i].moji)
 
-            for (i = 0; i < response.emoji.length; i++) {
-               
-                var emojiDiv = $("<div class='setEmoji'>");
+                        }
 
-                if (response.emoji[i].moji) {
-                    emojiDiv.append(response.emoji[i].moji);
-                    $("#bodyContent").append(emojiDiv);
-                    emojiDiv.attr("data-emoji", response.emoji[i].moji)
-
-
-                }
-
-            }
-        });
-
-
-        //"https://food.fnr.sndimg.com/content/dam/images/food/fullset/2010/5/1/0/0039592F3_beer-can-chicken_s4x3.jpg.rend.hgtvcom.616.462.suffix/1382539274625.jpeg"
-        $(document).on("click", ".setEmoji", function () {
-            image = $(this).attr("data-emoji");
-            console.log(image)
-
-            var marker = new google.maps.Marker({
-                position: location,
-                label: image,
-                map: map,
-                icon: "null"
-
-            });
-
-        });
-
+                    }
+                });
+          
+        //create a new marker. 
         var marker = new google.maps.Marker({
             position: location,
             label: image,
             map: map,
-            icon: "null"
+            icon: marker,
+            customInfo: uniqueId
 
         });
+        
+        //when anything on page with calass .setEmoji is clicked
+        $(document).on("click", ".setEmoji", function () {
+            //store value in the image var. 
+            image = $(this).attr("data-emoji");
+            //this needs to be looked at. 
+            /*var marker = new google.maps.Marker({
+                position: location,
+                label: image,
+                map: map,
+                icon: "null",
+                customInfo: uniqueId
+                
+            });*/
+                
+        });
+        
+      
+        uniqueId++;
+        markers.push(marker);
+        console.log(markers);
 
         // this deletes one marker. we need to change the event listener
-        google.maps.event.addListener(marker, 'click', function (event) {
-            this.setMap(null);
-        });
+       // google.maps.event.addListener(marker, 'click', function (event) {
+          //  this.setMap(null);
+        //});
 
 
-
+        //this opens popup when marker is clicked. 
         marker.addListener('click', function () {
             infowindow.open(map, marker);
         });
-        markers.push(marker);
+       
         //always open popup div
         infowindow.open(map, marker);
+        
         $("#bodyContent").empty();
         $(".subHeader").html("<h5>Describe this spot!</h5>");
 

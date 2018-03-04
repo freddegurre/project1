@@ -12,6 +12,7 @@ var map, infoWindow;
 var infoWindows = [];
 var image;
 var uniqueId = 1;
+var marker;
 
 
 function initMap() {
@@ -60,16 +61,17 @@ function initMap() {
                 });
           
         //create a new marker. 
-        var marker = new google.maps.Marker({
+         marker = new google.maps.Marker({
             position: location,
             label: image,
             map: map,
             icon: marker,
-            customInfo: uniqueId
+            customInfo: uniqueId,
+            desc:[]
 
+            //if (this.image === undefined); 
         });
-        
-        
+            
         //when anything on page with calass .setEmoji is clicked
         $(document).on("click", ".setEmoji", function () {
             //store value in the image var. 
@@ -83,11 +85,19 @@ function initMap() {
                 customInfo: uniqueId
                 
             });*/
+            function updateLabel(){
+                this.marker.label = image
+                //this.marker.label.reload ()
+                console.log(this.marker)
+            
+            }
+            updateLabel();
         });
         
       
-        uniqueId++;
-        markers.push(marker);
+       uniqueId++;
+            markers.push(marker);
+        
         console.log(markers);
 
         // this deletes one marker. we need to change the event listener
@@ -117,8 +127,8 @@ function initMap() {
             var description = $("#description").val().trim();
             $("#description").hide();
             $(".subHeader").html("<h5>" + description + "</h5>");
-            infoWindows.push(infowindow);
-            console.log(infoWindows);
+            marker.desc.push(pinName, description);
+    
         });
 
     }

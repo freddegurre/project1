@@ -135,7 +135,11 @@ function initMap() {
             infowindow.open(map, marker);
         });
         markers.push(marker);
-        //always open popup div
+        
+		
+		
+		
+		//always open popup div
         infowindow.open(map, marker); 
         $("#bodyContent").empty();
         $("#bodyContent").append("<h4>hello</h4>");

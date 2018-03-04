@@ -230,7 +230,7 @@ function initMap() {
         '<div id="bodyContent">' +
         '</div>' +
         '<button type="submit" class="btn btn-danger btn-xs" id="delete"> Delete </button>' +
-        '<button type="submit" class="btn btn-primary btn-xs" id="pinName"> Save </button>'
+        '<button type="submit" class="btn btn-primary btn-xs" id="pinName"> Save </button>' +
         '</div>';
 
     var infowindow = new google.maps.InfoWindow({

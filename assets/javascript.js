@@ -19,7 +19,7 @@ function initMap() {
         zoom: 14,
 
     });
-    infoWindow = new google.maps.InfoWindow;
+
 
     // This event listener calls addMarker() when the map is clicked.
     google.maps.event.addListener(map, 'click', function (event) {
@@ -104,11 +104,12 @@ function initMap() {
                     //     alert("emoji clicked");
                     // });
                 });
+
         //---------
-          
+
         //create a new marker. 
-         marker = new google.maps.Marker({
-            position: location, 
+        marker = new google.maps.Marker({
+            position: location,
             label: image,
             // label: {
             //     text: image,
@@ -117,75 +118,40 @@ function initMap() {
             map: map,
             icon: marker,
             customInfo: uniqueId,
-            info:[],
-        
+            info: [],
+
+
         });
-            
+
         //when anything on page with calass .setEmoji is clicked
         $(document).on("click", ".setEmoji", function () {
             //store value in the image var. 
             image = $(this).attr("data-emoji");
-           
-        
 
             //function to update label of current marker label
-            function updateLabel(){
-
+            function updateLabel() {
+                // set the label to be chosen emoji
                 this.marker.setLabel(image)
-               //return the image var to empty so that next created marker does not have a label from start
+                //return the image var to empty so that next created marker does not have a label from start
                 image = "";
 
-                //this.marker.label.reload ()
-                
             }
             updateLabel();
         });
-            // add one to unique id so that next marker get its own id.
-            uniqueId++;
-            //push the marker to array of markers. 
-            markers.push(marker);
-            //marker.setLabel("hello")
+
+        // add one to unique id so that next marker get its own id.
+        uniqueId++;
+        //push the marker to array of markers. 
+        markers.push(marker);
         
-        console.log(markers);
-
-        // this deletes one marker. we need to change the event listener
-       // google.maps.event.addListener(marker, 'click', function (event) {
-          //  this.setMap(null);
-        //});
-
-
+        
         //this opens popup when marker is clicked. 
         marker.addListener('click', function () {
-            infowindow.open(map, marker);
+            this.infowindow.open(map, this);
+
         });
-       
-        //always open popup div
-        infowindow.open(map, marker);
 
-        
-        $(".subHeader").html("<h5>Notes</h5>");
-
-
-        //when save inside infowindow is clicked
-        $("#pinName").on("click", function (event) {
-            event.preventDefault()
-            //store the value that user input in the topic-input form
-            var pinName = $("#input").val().trim(); 
-            //store the value of description in variable
-            var description = $("#description").val().trim();
-            //hide description form
-            $("#description").hide();
-            //push the name to popup 
-            $("#namePin").html("<h2>" + pinName + "</h2>");
-            //change the subheader to be the actual description written
-            $(".subHeader").html("<h5>" + description + "</h5>");
-            //push the pin name and description to marker info
-            marker.info.push(pinName, description);
-            
-        }); 
-    }
-
-    var contentString = '<div id="content">' +
+     var contentString = '<div id="content">' +
         '</div>' +
         '<br>' +
         '<div id="namePin">' +
@@ -261,10 +227,55 @@ function initMap() {
         // pixelOffset: new google.maps.Size(160,200)
     });
 
+        //always open popup div when marker is created
+        infowindow.open(map, marker);
+
+        marker.infowindow = infowindow  
+        
+    }
+
+ //when save inside infowindow is clicked
+ $(document).on("click", "#pinName", function (){
+            event.preventDefault()
+            //store the value that user input in the topic-input form
+            var pinName = $("#input").val().trim();
+            //store the value of description in variable
+            var description = $("#description").val().trim();
+            //hide description form
+            $("#description").hide();
+            //push the name to popup 
+            $("#namePin").html("<h2>" + pinName + "</h2>");
+            //change the subheader to be the actual description written
+            $(".subHeader").html("<h5>" + description + "</h5>");
+            $("#description").hide()
+            $("#pinName").hide()
+   
+          //push the pin name and description to marker info
+            marker.info.push(pinName, description);
+            console.log(pinName);
+            console.log(description);
+            console.log(marker.label);
+            console.log(marker.position);
+            localStorage.setItem('pinName', pinName);
+            localStorage.setItem('description', description);
+            localStorage.setItem('marker.label', marker.label);
+            localStorage.setItem('marker.position', marker.position);
+        }); 
+
+   }
+     
+      
+    
+
+ // this deletes one marker. we need to change the event listener
+       // google.maps.event.addListener(marker, 'click', function (event) {
+          //  this.setMap(null);
+        //});
+
     //---------- GEO LOCATION 
 
     // Try HTML5 geolocation.
-    if (navigator.geolocation) {
+   /* if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
             var pos = {
                 lat: position.coords.latitude,
@@ -282,7 +293,9 @@ function initMap() {
         // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());
     }
+
 }
+
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.setPosition(pos);

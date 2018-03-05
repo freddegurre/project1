@@ -3,6 +3,7 @@
 * element that contains the map. */
 
 
+
 .header {
     text-align: center;
     font-size: 50px;
@@ -25,6 +26,7 @@
 
 #map {
     height: 100%;
+    top: 72px;
 }
 
 /* Optional: Makes the sample page fill the window. */
@@ -38,6 +40,25 @@ body {
 
 .setEmoji {
     display: inline-block;
+    font-size: 20px;
+}
+
+.abstract {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.abstract,
+.faces,
+.food,
+.nature,
+.objects,
+.places,
+.symbols,
+.tools,
+.transportation {
+    font-weight: bold;
+    text-decoration: underline;
 }
 
 #pinName {

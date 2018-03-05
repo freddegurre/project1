@@ -1,3 +1,4 @@
+
 //google maps api key AIzaSyD7b6YGD2VKhvICqzlYp3rvpn-V54UMP3Y
 
 //var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -8,7 +9,6 @@ var infoWindows = [];
 var image;
 var uniqueId = 1;
 var marker;
-
 
 function initMap() {
 
@@ -24,6 +24,8 @@ function initMap() {
     // This event listener calls addMarker() when the map is clicked.
     google.maps.event.addListener(map, 'click', function (event) {
         addMarker(event.latLng, map);
+        console.log(event.latLng.lat);
+        map.setCenter(event.latLng); 
 
     });
 
@@ -32,24 +34,68 @@ function initMap() {
 
         //-------------
                 //the query for the emojis. 
-                var queryUrl = "https://www.emojidex.com/api/v1/emoji/";
+                var queryUrl = "https://www.emojidex.com/api/v1/utf_emoji/";
+                var proxy = "https://cors-anywhere.herokuapp.com/";
+
                 //call the query
                 $.ajax({
                     method: "GET",
-                    url: queryUrl
+                    url: proxy + queryUrl
                 }).then(function (response) {
                     //for each emoji in response
-                    for (i = 0; i < response.emoji.length; i++) {
+                    // console.log(response);
+                    var results = JSON.parse(response);
+                    for (i = 0; i < results.length; i++) {
                     //create div and give it class 
                         var emojiDiv = $("<div class='setEmoji'>");
+                        
                         //check if there is actual emoji in the response
-                        if (response.emoji[i].moji) {
+                        if (results[i].moji) {
+                            if(results[i].category === "abstract"){
+                                $(".abstract").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
+                            }
+                            if(results[i].category === "faces"){
+                                $(".faces").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
+                            }
+                            if(results[i].category === "food"){
+                                // console.log("yay food ", results[i].moji)
+                                $(".food").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
+                            }
+                            if(results[i].category === "nature"){
+                                $(".nature").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
+                            }
+                            if(results[i].category === "objects"){
+                                $(".objects").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
+                            }
+                            if(results[i].category === "places"){
+                                $(".places").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
+                            }
+                            if(results[i].category === "symbols"){
+                                $(".symbols").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
+                            }
+                            if(results[i].category === "tools"){
+                                $(".tools").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
+                            }
+                            if(results[i].category === "transportation"){
+                                $(".transportation").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
+                            }
+
+                            // if(results[i].category === "food"){
+                            //     console.log("yay food ", results[i].moji)
+                            //     emojiDiv.append(results[i].moji);
+                            // }
+
+                            // if(results[i].category === "food"){
+                            //     console.log("yay food ", results[i].moji)
+                            //     emojiDiv.append(results[i].moji);
+                            // }
                             //append the emoji to the emojiDiv 
-                            emojiDiv.append(response.emoji[i].moji);
+                            // emojiDiv.append(results[i].moji);
                             //append the emoji div to body content.
-                            $(".emojiBox").append(emojiDiv);
+                            // $(".emojiBox").append(foodDiv);
                             //set the data attribute equal to emoji 
-                            emojiDiv.attr("data-emoji", response.emoji[i].moji)
+                            
+
 
                         }
 
@@ -62,8 +108,12 @@ function initMap() {
           
         //create a new marker. 
          marker = new google.maps.Marker({
-            position: location,
+            position: location, 
             label: image,
+            // label: {
+            //     text: image,
+            //     fontSize: "30px"
+            // },
             map: map,
             icon: marker,
             customInfo: uniqueId,
@@ -133,10 +183,7 @@ function initMap() {
             marker.info.push(pinName, description);
             
         }); 
-
     }
-
-
 
     var contentString = '<div id="content">' +
         '</div>' +
@@ -148,6 +195,7 @@ function initMap() {
                  '</div>' +
             '</form>' +
         '</div>' +
+        '<br>' +
         '<div class="subHeader">'+
         '</div>'+
         '<textarea class="form-control" id="description" rows="3"></textarea>'+
@@ -157,9 +205,46 @@ function initMap() {
             'Emoji Choices' +
             '<span class="caret"></span>' +
         '</button>' +
+        '<br>' +
         '<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">' +
             '<li>' +
                 '<div class="emojiBox">' +
+                '<div class= "abstract">Abstract' +
+                '<br>' +
+                '</div>' +
+                '<br>' +
+                '<div class= "faces">Faces' +
+                '<br>' +
+                '</div>' +
+                '<br>' +
+                '<div class= "food">Food' +
+                '<br>' +
+                '</div>' +
+                '<br>' +
+                '<div class= "nature">Nature' +
+                '<br>' +
+                '</div>' +
+                '<br>' +
+                '<div class= "objects">Objects' +
+                '<br>' +
+                '</div>' +
+                '<br>' +
+                '<div class= "places">Places' +
+                '<br>' +
+                '</div>' +
+                '<br>' +
+                '<div class= "symbols">Symbols' +
+                '<br>' +
+                '</div>' +
+                '<br>' +
+                '<div class= "tools">Tools' +
+                '<br>' +
+                '</div>' +
+                '<br>' +
+                '<div class= "transportation">Transportation' +
+                '<br>' +
+                '</div>' +
+                '<br>' +
             '</li>' +
         '</ul>' +
         '</div>' +
@@ -172,11 +257,9 @@ function initMap() {
 
     var infowindow = new google.maps.InfoWindow({
         content: contentString,
-        maxWidth: 250
+        maxWidth: 500,
+        // pixelOffset: new google.maps.Size(160,200)
     });
-
-
-
 
     //---------- GEO LOCATION 
 
@@ -199,11 +282,7 @@ function initMap() {
         // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());
     }
-
-
 }
-
-
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.setPosition(pos);
@@ -212,4 +291,3 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         'Error: Your browser doesn\'t support geolocation.');
     infoWindow.open(map);
 }
-

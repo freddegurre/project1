@@ -73,12 +73,12 @@ function initMap() {
             //store value in the image var. 
             image = $(this).attr("data-emoji");
            
-            //setLabel(label, image)
+        
 
             //function to update label of current marker label
             function updateLabel(){
-                //set this maker.label to the value of image
-                this.marker.label = image
+
+                this.marker.setLabel(image)
                //return the image var to empty so that next created marker does not have a label from start
                 image = "";
 
@@ -91,6 +91,7 @@ function initMap() {
             uniqueId++;
             //push the marker to array of markers. 
             markers.push(marker);
+            //marker.setLabel("hello")
         
         console.log(markers);
 

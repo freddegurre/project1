@@ -131,7 +131,14 @@ function initMap() {
             $(".subHeader").html("<h5>" + description + "</h5>");
             //push the pin name and description to marker info
             marker.info.push(pinName, description);
-            
+            console.log(pinName);
+			console.log(description);
+			console.log(marker.label);
+			console.log(marker.position);
+			localStorage.setItem('pinName', pinName);
+			localStorage.setItem('description', description);
+			localStorage.setItem('marker.label', marker.label);
+			localStorage.setItem('marker.position', marker.position);
         }); 
 
     }

@@ -134,14 +134,17 @@ function initMap() {
                         if (response.emoji[i].moji) {
                             //append the emoji to the emojiDiv 
                             emojiDiv.append(response.emoji[i].moji);
-                            //append the emoji div to body content. 
-                            $("#bodyContent").append(emojiDiv);
+                            //append the emoji div to body content.
+                            $(".emojiBox").append(emojiDiv);
                             //set the data attribute equal to emoji 
                             emojiDiv.attr("data-emoji", response.emoji[i].moji)
 
                         }
 
                     }
+                    // $(document).on("click", ".setEmoji", function() {
+                    //     alert("emoji clicked");
+                    // });
                 });
           
         //create a new marker. 
@@ -189,8 +192,7 @@ function initMap() {
         //always open popup div
         infowindow.open(map, marker);
         
-        $("#bodyContent").empty();
-        $(".subHeader").html("<h5>Describe this spot!</h5>");
+        $(".subHeader").html("<h5>Notes</h5>");
 
         $("#pinName").on("click", function (event) {
             event.preventDefault()
@@ -217,21 +219,35 @@ function initMap() {
 
     var contentString = '<div id="content">' +
         '</div>' +
+        '<br>' +
         '<div id="namePin">' +
             '<form class="form-inline">' +
                 '<divclass="input-group">' +
-                    '<input type="text" class="form-control" id="input" placeholder="Name of PIN">' +
+                    '<input type="text" class="form-control" id="input" placeholder="Location Title">' +
                  '</div>' +
             '</form>' +
         '</div>' +
         '<div class="subHeader">'+
         '</div>'+
         '<textarea class="form-control" id="description" rows="3"></textarea>'+
+        '<br>' +
+        '<div class="dropdown">' +
+        '<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">' +
+            'Emoji Choices' +
+            '<span class="caret"></span>' +
+        '</button>' +
+        '<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">' +
+            '<li>' +
+                '<div class="emojiBox">' +
+            '</li>' +
+        '</ul>' +
+        '</div>' +
         '<div id="bodyContent">' +
         '</div>' +
-        '<button type="submit" class="btn btn-danger btn-xs" id="delete"> Delete </button>' +
-        '<button type="submit" class="btn btn-primary btn-xs" id="pinName"> Save </button>' +
-        '</div>';
+        '<br>' +
+        '<button type="submit" class="btn btn-primary btn-xs" id="pinName"> Save Location </button>'+
+        '<button type="submit" class="btn btn-danger btn-xs" id="delete"> Delete Location </button>';
+       
 
     var infowindow = new google.maps.InfoWindow({
         content: contentString,

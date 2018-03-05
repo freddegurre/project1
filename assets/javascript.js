@@ -19,7 +19,7 @@ function initMap() {
         zoom: 14,
 
     });
-    infoWindow = new google.maps.InfoWindow;
+
 
     // This event listener calls addMarker() when the map is clicked.
     google.maps.event.addListener(map, 'click', function (event) {
@@ -54,9 +54,6 @@ function initMap() {
                         }
 
                     }
-                    // $(document).on("click", ".setEmoji", function() {
-                    //     alert("emoji clicked");
-                    // });
                 });
         //---------
           
@@ -68,6 +65,7 @@ function initMap() {
             icon: marker,
             customInfo: uniqueId,
             info:[],
+    
         
         });
             
@@ -96,21 +94,14 @@ function initMap() {
             markers.push(marker);
             //marker.setLabel("hello")
         
-        console.log(markers);
+       // console.log(markers);
 
         // this deletes one marker. we need to change the event listener
        // google.maps.event.addListener(marker, 'click', function (event) {
           //  this.setMap(null);
         //});
-
-
-        //this opens popup when marker is clicked. 
-        marker.addListener('click', function () {
-            infowindow.open(map, marker);
-        });
        
-        //always open popup div
-        infowindow.open(map, marker);
+       
 
         
         $(".subHeader").html("<h5>Notes</h5>");
@@ -133,12 +124,13 @@ function initMap() {
             marker.info.push(pinName, description);
             
         }); 
+    //this opens popup when marker is clicked. 
+       marker.addListener('click', function () {
+            this.infowindow.open(map, this);
+        
+        });
 
-    }
-
-
-
-    var contentString = '<div id="content">' +
+var contentString = '<div id="content">' +
         '</div>' +
         '<br>' +
         '<div id="namePin">' +
@@ -168,20 +160,36 @@ function initMap() {
         '<br>' +
         '<button type="submit" class="btn btn-primary btn-xs" id="pinName"> Save Location </button>'+
         '<button type="submit" class="btn btn-danger btn-xs" id="delete"> Delete Location </button>';
-       
 
-    var infowindow = new google.maps.InfoWindow({
+
+         
+        
+        var infowindow = new google.maps.InfoWindow({
         content: contentString,
         maxWidth: 250
+        
     });
+     //always open popup div when marker is created
+        infowindow.open(map, marker);
+
+    marker.infowindow = infowindow
+    }
 
 
 
+    
+       
+
+   
+
+    
+
+}
 
     //---------- GEO LOCATION 
 
     // Try HTML5 geolocation.
-    if (navigator.geolocation) {
+   /* if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
             var pos = {
                 lat: position.coords.latitude,
@@ -201,7 +209,7 @@ function initMap() {
     }
 
 
-}
+
 
 
 
@@ -211,5 +219,5 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         'Error: The Geolocation service failed.' :
         'Error: Your browser doesn\'t support geolocation.');
     infoWindow.open(map);
-}
+}*/
 

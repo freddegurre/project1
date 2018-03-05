@@ -1,3 +1,4 @@
+
 //google maps api key AIzaSyD7b6YGD2VKhvICqzlYp3rvpn-V54UMP3Y
 
 //var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -8,7 +9,6 @@ var infoWindows = [];
 var image;
 var uniqueId = 1;
 var marker;
-
 
 function initMap() {
 
@@ -24,6 +24,8 @@ function initMap() {
     // This event listener calls addMarker() when the map is clicked.
     google.maps.event.addListener(map, 'click', function (event) {
         addMarker(event.latLng, map);
+        console.log(event.latLng.lat);
+        map.setCenter(event.latLng); 
 
     });
 
@@ -31,36 +33,88 @@ function initMap() {
     function addMarker(location, map) {
 
         //-------------
-        //the query for the emojis. 
-        var queryUrl = "https://www.emojidex.com/api/v1/emoji/";
-        //call the query
-        $.ajax({
-            method: "GET",
-            url: queryUrl
-        }).then(function (response) {
-            //for each emoji in response
-            for (i = 0; i < response.emoji.length; i++) {
-                //create div and give it class 
-                var emojiDiv = $("<div class='setEmoji'>");
-                //check if there is actual emoji in the response
-                if (response.emoji[i].moji) {
-                    //append the emoji to the emojiDiv 
-                    emojiDiv.append(response.emoji[i].moji);
-                    //append the emoji div to body content.
-                    $(".emojiBox").append(emojiDiv);
-                    //set the data attribute equal to emoji 
-                    emojiDiv.attr("data-emoji", response.emoji[i].moji)
+                //the query for the emojis. 
+                var queryUrl = "https://www.emojidex.com/api/v1/utf_emoji/";
+                var proxy = "https://cors-anywhere.herokuapp.com/";
 
-                }
+                //call the query
+                $.ajax({
+                    method: "GET",
+                    url: proxy + queryUrl
+                }).then(function (response) {
+                    //for each emoji in response
+                    // console.log(response);
+                    var results = JSON.parse(response);
+                    for (i = 0; i < results.length; i++) {
+                    //create div and give it class 
+                        var emojiDiv = $("<div class='setEmoji'>");
+                        
+                        //check if there is actual emoji in the response
+                        if (results[i].moji) {
+                            if(results[i].category === "abstract"){
+                                $(".abstract").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
+                            }
+                            if(results[i].category === "faces"){
+                                $(".faces").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
+                            }
+                            if(results[i].category === "food"){
+                                // console.log("yay food ", results[i].moji)
+                                $(".food").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
+                            }
+                            if(results[i].category === "nature"){
+                                $(".nature").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
+                            }
+                            if(results[i].category === "objects"){
+                                $(".objects").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
+                            }
+                            if(results[i].category === "places"){
+                                $(".places").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
+                            }
+                            if(results[i].category === "symbols"){
+                                $(".symbols").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
+                            }
+                            if(results[i].category === "tools"){
+                                $(".tools").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
+                            }
+                            if(results[i].category === "transportation"){
+                                $(".transportation").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
+                            }
 
-            }
-        });
+                            // if(results[i].category === "food"){
+                            //     console.log("yay food ", results[i].moji)
+                            //     emojiDiv.append(results[i].moji);
+                            // }
+
+                            // if(results[i].category === "food"){
+                            //     console.log("yay food ", results[i].moji)
+                            //     emojiDiv.append(results[i].moji);
+                            // }
+                            //append the emoji to the emojiDiv 
+                            // emojiDiv.append(results[i].moji);
+                            //append the emoji div to body content.
+                            // $(".emojiBox").append(foodDiv);
+                            //set the data attribute equal to emoji 
+                            
+
+
+                        }
+
+                    }
+                    // $(document).on("click", ".setEmoji", function() {
+                    //     alert("emoji clicked");
+                    // });
+                });
+
         //---------
 
         //create a new marker. 
         marker = new google.maps.Marker({
             position: location,
             label: image,
+            // label: {
+            //     text: image,
+            //     fontSize: "30px"
+            // },
             map: map,
             icon: marker,
             customInfo: uniqueId,
@@ -97,42 +151,81 @@ function initMap() {
 
         });
 
-        var contentString = '<div id="content">' +
-            '</div>' +
-            '<br>' +
-            '<div id="namePin">' +
+     var contentString = '<div id="content">' +
+        '</div>' +
+        '<br>' +
+        '<div id="namePin">' +
             '<form class="form-inline">' +
-            '<divclass="input-group">' +
-            '<input type="text" class="form-control" id="input" placeholder="Location Title">' +
-            '</div>' +
+                '<divclass="input-group">' +
+                    '<input type="text" class="form-control" id="input" placeholder="Location Title">' +
+                 '</div>' +
             '</form>' +
-            '</div>' +
-            '<div class="subHeader"> <h5> Notes </h5>' +
-            '</div>' +
-            '<textarea class="form-control" id="description" rows="3"></textarea>' +
-            '<br>' +
-            '<div class="dropdown">' +
-            '<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">' +
+        '</div>' +
+        '<br>' +
+        '<div class="subHeader">'+
+        '</div>'+
+        '<textarea class="form-control" id="description" rows="3"></textarea>'+
+        '<br>' +
+        '<div class="dropdown">' +
+        '<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">' +
             'Emoji Choices' +
             '<span class="caret"></span>' +
-            '</button>' +
-            '<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">' +
+        '</button>' +
+        '<br>' +
+        '<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">' +
             '<li>' +
-            '<div class="emojiBox">' +
+                '<div class="emojiBox">' +
+                '<div class= "abstract">Abstract' +
+                '<br>' +
+                '</div>' +
+                '<br>' +
+                '<div class= "faces">Faces' +
+                '<br>' +
+                '</div>' +
+                '<br>' +
+                '<div class= "food">Food' +
+                '<br>' +
+                '</div>' +
+                '<br>' +
+                '<div class= "nature">Nature' +
+                '<br>' +
+                '</div>' +
+                '<br>' +
+                '<div class= "objects">Objects' +
+                '<br>' +
+                '</div>' +
+                '<br>' +
+                '<div class= "places">Places' +
+                '<br>' +
+                '</div>' +
+                '<br>' +
+                '<div class= "symbols">Symbols' +
+                '<br>' +
+                '</div>' +
+                '<br>' +
+                '<div class= "tools">Tools' +
+                '<br>' +
+                '</div>' +
+                '<br>' +
+                '<div class= "transportation">Transportation' +
+                '<br>' +
+                '</div>' +
+                '<br>' +
             '</li>' +
-            '</ul>' +
-            '</div>' +
-            '<div id="bodyContent">' +
-            '</div>' +
-            '<br>' +
-            '<button type="submit" class="btn btn-primary btn-xs" id="pinName"> Save Location </button>' +
-            '<button type="submit" class="btn btn-danger btn-xs" id="delete"> Delete Location </button>';
+        '</ul>' +
+        '</div>' +
+        '<div id="bodyContent">' +
+        '</div>' +
+        '<br>' +
+        '<button type="submit" class="btn btn-primary btn-xs" id="pinName"> Save Location </button>'+
+        '<button type="submit" class="btn btn-danger btn-xs" id="delete"> Delete Location </button>';
+       
 
-        var infowindow = new google.maps.InfoWindow({
-            content: contentString,
-            maxWidth: 250
-
-        });
+    var infowindow = new google.maps.InfoWindow({
+        content: contentString,
+        maxWidth: 500,
+        // pixelOffset: new google.maps.Size(160,200)
+    });
 
         //always open popup div when marker is created
         infowindow.open(map, marker);
@@ -201,9 +294,7 @@ function initMap() {
         handleLocationError(false, infoWindow, map.getCenter());
     }
 
-
-
-
+}
 
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -212,5 +303,4 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         'Error: The Geolocation service failed.' :
         'Error: Your browser doesn\'t support geolocation.');
     infoWindow.open(map);
-}*/
-
+}

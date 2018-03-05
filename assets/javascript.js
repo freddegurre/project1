@@ -149,18 +149,30 @@ function initMap() {
             //store the value of description in variable
             var description = $("#description").val().trim();
             //hide description form
-            $("#namePin").html("<h2>" + pinName + "<h2>")
-            $(".subHeader").html("<h5>" + description + "<h5>")
+            $("#description").hide();
+            //push the name to popup 
+            $("#namePin").html("<h2>" + pinName + "</h2>");
+            //change the subheader to be the actual description written
+            $(".subHeader").html("<h5>" + description + "</h5>");
             $("#description").hide()
             $("#pinName").hide()
-
+   
+          //push the pin name and description to marker info
             marker.info.push(pinName, description);
+            console.log(pinName);
+            console.log(description);
+            console.log(marker.label);
+            console.log(marker.position);
+            localStorage.setItem('pinName', pinName);
+            localStorage.setItem('description', description);
+            localStorage.setItem('marker.label', marker.label);
+            localStorage.setItem('marker.position', marker.position);
+        }); 
 
-        });
+   }
+     
       
-       
-
-
+    
 }
  // this deletes one marker. we need to change the event listener
        // google.maps.event.addListener(marker, 'click', function (event) {

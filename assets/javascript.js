@@ -1,10 +1,5 @@
 //google maps api key AIzaSyD7b6YGD2VKhvICqzlYp3rvpn-V54UMP3Y
 
-
-// Note: This example requires that you consent to location sharing when
-// prompted by your browser. If you see the error "The Geolocation service
-// failed.", it means you probably did not give permission for the browser to
-// locate you.
 //var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 //var labelIndex = 0;
 var markers = [];
@@ -19,7 +14,7 @@ function initMap() {
 
 
     // Styles a map in night mode.
-    var map = new google.maps.Map(document.getElementById('map'), {
+    map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 40.674, lng: -73.945 },
         zoom: 14,
 
@@ -35,6 +30,7 @@ function initMap() {
     // Adds a marker to the map.
     function addMarker(location, map) {
 
+        //-------------
                 //the query for the emojis. 
                 var queryUrl = "https://www.emojidex.com/api/v1/emoji/";
                 //call the query
@@ -59,6 +55,7 @@ function initMap() {
 
                     }
                 });
+        //---------
           
         //create a new marker. 
          marker = new google.maps.Marker({
@@ -67,29 +64,32 @@ function initMap() {
             map: map,
             icon: marker,
             customInfo: uniqueId,
-            desc:[],
-            
-
-            //if (this.image === undefined); 
+            info:[],
+        
         });
             
         //when anything on page with calass .setEmoji is clicked
         $(document).on("click", ".setEmoji", function () {
             //store value in the image var. 
             image = $(this).attr("data-emoji");
-            
+           
+            //setLabel(label, image)
+
+            //function to update label of current marker label
             function updateLabel(){
+                //set this maker.label to the value of image
                 this.marker.label = image
-                this.marker.icon = "test"
+               //return the image var to empty so that next created marker does not have a label from start
                 image = "";
+
                 //this.marker.label.reload ()
-                console.log(this.marker)
-                console.log(image)
+                
             }
             updateLabel();
         });
-        
-       uniqueId++;
+            // add one to unique id so that next marker get its own id.
+            uniqueId++;
+            //push the marker to array of markers. 
             markers.push(marker);
         
         console.log(markers);
@@ -111,20 +111,27 @@ function initMap() {
         $("#bodyContent").empty();
         $(".subHeader").html("<h5>Describe this spot!</h5>");
 
+        //when save inside infowindow is clicked
         $("#pinName").on("click", function (event) {
             event.preventDefault()
             //store the value that user input in the topic-input form
             var pinName = $("#input").val().trim(); 
+            //store the value of description in variable
             var description = $("#description").val().trim();
+            //hide description form
             $("#description").hide();
+            //push the name to popup 
+            $("#namePin").html("<h2>" + pinName + "</h2>");
+            //change the subheader to be the actual description written
             $(".subHeader").html("<h5>" + description + "</h5>");
-            marker.desc.push(pinName, description);
+            //push the pin name and description to marker info
+            marker.info.push(pinName, description);
             
         }); 
 
     }
 
-    console.log(marker)
+
 
     var contentString = '<div id="content">' +
         '</div>' +

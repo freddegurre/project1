@@ -67,7 +67,8 @@ function initMap() {
             map: map,
             icon: marker,
             customInfo: uniqueId,
-            desc:[]
+            desc:[],
+            
 
             //if (this.image === undefined); 
         });
@@ -76,25 +77,18 @@ function initMap() {
         $(document).on("click", ".setEmoji", function () {
             //store value in the image var. 
             image = $(this).attr("data-emoji");
-            //this needs to be looked at. 
-            /*var marker = new google.maps.Marker({
-                position: location,
-                label: image,
-                map: map,
-                icon: "null",
-                customInfo: uniqueId
-                
-            });*/
+            
             function updateLabel(){
                 this.marker.label = image
+                this.marker.icon = "test"
+                image = "";
                 //this.marker.label.reload ()
                 console.log(this.marker)
-            
+                console.log(image)
             }
             updateLabel();
         });
         
-      
        uniqueId++;
             markers.push(marker);
         
@@ -120,20 +114,17 @@ function initMap() {
         $("#pinName").on("click", function (event) {
             event.preventDefault()
             //store the value that user input in the topic-input form
-            var pinName = $("#input").val().trim();
-            //push the value to topics array
-            console.log(pinName);
-            $("#namePin").html("<h3>" + pinName + "</h3>");
+            var pinName = $("#input").val().trim(); 
             var description = $("#description").val().trim();
             $("#description").hide();
             $(".subHeader").html("<h5>" + description + "</h5>");
             marker.desc.push(pinName, description);
-    
-        });
+            
+        }); 
 
     }
 
-    console.log(markers)
+    console.log(marker)
 
     var contentString = '<div id="content">' +
         '</div>' +

@@ -173,7 +173,7 @@ function initMap() {
      
       
     
-}
+
  // this deletes one marker. we need to change the event listener
        // google.maps.event.addListener(marker, 'click', function (event) {
           //  this.setMap(null);

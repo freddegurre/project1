@@ -24,12 +24,13 @@ function initMap() {
     // This event listener calls addMarker() when the map is clicked.
     google.maps.event.addListener(map, 'click', function (event) {
         addMarker(event.latLng, map);
-
+        //close(marker.infoWindow)
+        console.log(event.latLng)
     });
 
     // Adds a marker to the map.
-    function addMarker(location, map) {
-
+    function addMarker(location, map, image, info) {
+        
         //-------------
         //the query for the emojis. 
         var queryUrl = "https://www.emojidex.com/api/v1/emoji/";
@@ -59,13 +60,14 @@ function initMap() {
 
         //create a new marker. 
         marker = new google.maps.Marker({
-            position: location,
+            position: location, 
             label: image,
             map: map,
             icon: marker,
             customInfo: uniqueId,
-            info: [],
+            info: [info],
 
+            
 
         });
 
@@ -89,8 +91,8 @@ function initMap() {
         uniqueId++;
         //push the marker to array of markers. 
         markers.push(marker);
-        
-        
+
+
         //this opens popup when marker is clicked. 
         marker.addListener('click', function () {
             this.infowindow.open(map, this);
@@ -137,48 +139,66 @@ function initMap() {
         //always open popup div when marker is created
         infowindow.open(map, marker);
 
-        marker.infowindow = infowindow  
-        
-    }
+        marker.infowindow = infowindow
+        // this deletes one marker. we need to change the event listener
 
- //when save inside infowindow is clicked
- $(document).on("click", "#pinName", function (){
-            event.preventDefault()
-            //store the value that user input in the topic-input form
-            var pinName = $("#input").val().trim();
-            //store the value of description in variable
-            var description = $("#description").val().trim();
-            //hide description form
-            $("#description").hide();
-            //push the name to popup 
-            $("#namePin").html("<h2>" + pinName + "</h2>");
-            //change the subheader to be the actual description written
-            $(".subHeader").html("<h5>" + description + "</h5>");
-            $("#description").hide()
-            $("#pinName").hide()
-   
-          //push the pin name and description to marker info
-            marker.info.push(pinName, description);
-            console.log(pinName);
-            console.log(description);
-            console.log(marker.label);
-            console.log(marker.position);
-            localStorage.setItem('pinName', pinName);
-            localStorage.setItem('description', description);
-            localStorage.setItem('marker.label', marker.label);
-            localStorage.setItem('marker.position', marker.position);
-        }); 
-
-   }
-     
-      
-    
-
- // this deletes one marker. we need to change the event listener
-       // google.maps.event.addListener(marker, 'click', function (event) {
-          //  this.setMap(null);
+        $(document).on("click", "#delete", function () {
+            console.log(this.marker)
+            //this.marker.setMap(null);
+        });
+        //google.maps.event.addListener(marker, 'click', function (event) {
+        //this.setMap(null);
         //});
 
+    }
+    //markers[indexOfMarker].setMap(null);
+
+    //when save inside infowindow is clicked
+    $(document).on("click", "#pinName", function () {
+        event.preventDefault()
+        //store the value that user input in the topic-input form
+        var pinName = $("#input").val().trim();
+        //store the value of description in variable
+        var description = $("#description").val().trim();
+        //hide description form
+        $("#description").hide();
+        //push the name to popup 
+        $("#namePin").html("<h2>" + pinName + "</h2>");
+        //change the subheader to be the actual description written
+        $(".subHeader").html("<h5>" + description + "</h5>");
+        $("#description").hide()
+        $("#pinName").hide()
+
+        //push the pin name and description to marker info
+        marker.info.push(pinName, description);
+        console.log(pinName);
+        console.log(description);
+        console.log(marker.label);
+        console.log(marker.position);
+        localStorage.setItem('pinName', pinName);
+        localStorage.setItem('description', description);
+        localStorage.setItem('marker.label', marker.label);
+        localStorage.setItem('marker.position', marker.position);
+    });
+
+   
+
+addMarker(savedPosition, map, savedLabel, savedName) 
+}
+var savedPosition = {lat:42.123456789, lng:-36.123456789};
+var savedName = "hello"; 
+var savedLabel = "💩";
+var map = map
+
+
+
+
+/* $(document).on("click", "#delete", function () {
+        function deleteMarker(marker) {
+            console.log(marker);
+            //this.marker.setMap(null);
+        }
+    });*/
     //---------- GEO LOCATION 
 
     // Try HTML5 geolocation.

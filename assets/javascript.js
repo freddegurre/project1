@@ -108,7 +108,7 @@ function initMap() {
             icon: marker,
             customInfo: uniqueId,
             info: []
-
+            
 
         });
 
@@ -121,7 +121,7 @@ function initMap() {
             //function to update label of current marker label
             function updateLabel() {
                 // set the label to be chosen emoji
-                this.marker.setLabel(image)
+               
                 //return the image var to empty so that next created marker does not have a label from start
                 image = "";
 
@@ -283,7 +283,7 @@ function initMap() {
     console.log(localStorage)
 
     //call function to create marker from local storage
-    //addMarker(savedPosition, map, savedLabel, savedName, savedDesc)
+   //addMarker(savedPosition, map, savedLabel, savedName, savedDesc)
 }
 
 //delete marker function 

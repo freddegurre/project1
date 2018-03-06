@@ -248,7 +248,10 @@ function initMap() {
         localStorage.setItem('description', description);
         localStorage.setItem('marker.label', marker.label);
         localStorage.setItem('marker.position', marker.position);
+        
         //localStorage.setItem('marker', pinName + description + marker.label + marker.position);
+
+       // localStorage.setItem('markers', markers);
 
          
     });
@@ -276,7 +279,7 @@ function initMap() {
 
 
   
-    var savedName = localStorage.getItem('pinName');
+var savedName = localStorage.getItem('pinName');
   console.log(savedName);
   var savedDesc = localStorage.getItem('description');
   console.log(savedDesc);
@@ -294,6 +297,7 @@ function initMap() {
 
  console.log(lat);
  console.log(long);
+ console.log(localStorage)
 
  //push the pin name and description to marker info
 

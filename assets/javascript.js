@@ -241,7 +241,7 @@ var iconBase = 'https://i.imgur.com/CoiFeTy.png';
         $(".subHeader").html("<h5>" + description + "</h5>");
         $("#description").hide()
         $("#pinName").hide()
-        $("#delete").attr("data", deleteID);
+        //$("#delete").attr("data", deleteID);
         deleteID++;
         marker.info.push(pinName, description);
 

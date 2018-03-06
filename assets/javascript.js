@@ -45,7 +45,7 @@ function initMap() {
             url: proxy + queryUrl
         }).then(function (response) {
             //for each emoji in response
-            // console.log(response);
+
             var results = JSON.parse(response);
             for (i = 0; i < results.length; i++) {
                 //create div and give it class 
@@ -82,20 +82,6 @@ function initMap() {
                         $(".transportation").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
                     }
 
-                    // if(results[i].category === "food"){
-                    //     console.log("yay food ", results[i].moji)
-                    //     emojiDiv.append(results[i].moji);
-                    // }
-
-                    // if(results[i].category === "food"){
-                    //     console.log("yay food ", results[i].moji)
-                    //     emojiDiv.append(results[i].moji);
-                    // }
-                    //append the emoji to the emojiDiv 
-                    // emojiDiv.append(results[i].moji);
-                    //append the emoji div to body content.
-                    // $(".emojiBox").append(foodDiv);
-                    //set the data attribute equal to emoji 
 
 
 
@@ -153,9 +139,7 @@ function initMap() {
 
         });
 
-        var contentString = '<div id="content">' +
-            '</div>' +
-            '<br>' +
+        var contentString = 
             '<div id="namePin">' +
             '<form class="form-inline">' +
             '<divclass="input-group">' +
@@ -226,7 +210,7 @@ function initMap() {
         
             var infowindow = new google.maps.InfoWindow({
             content: contentString,
-            maxWidth: 500,
+            maxWidth: 300,
             // pixelOffset: new google.maps.Size(160,200)
         });
 
@@ -264,6 +248,8 @@ function initMap() {
         localStorage.setItem('description', description);
         localStorage.setItem('marker.label', marker.label);
         localStorage.setItem('marker.position', marker.position);
+        //localStorage.setItem('marker', pinName + description + marker.label + marker.position);
+
          
     });
     
@@ -290,7 +276,7 @@ function initMap() {
 
 
   
-    /*var savedName = localStorage.getItem('pinName');
+    var savedName = localStorage.getItem('pinName');
   console.log(savedName);
   var savedDesc = localStorage.getItem('description');
   console.log(savedDesc);
@@ -301,19 +287,18 @@ function initMap() {
   savedPosition= savedPosition.replace(')','');
   savedPosition = savedPosition.split(",")
 
-  parseInt(savedPosition[0])
-  parseInt(savedPosition[1])
+  var lat = parseFloat(savedPosition[0])
+  var long =  parseFloat(savedPosition[1])
 
-  console.log(savedPosition[0])
- savedPosition = {lat:savedPosition[0], lng:savedPosition[1]};
+ savedPosition = {lat:lat, lng:long};
 
- console.log(savedPosition);*/
-
+ console.log(lat);
+ console.log(long);
 
  //push the pin name and description to marker info
 
- 
-//addMarker(savedPosition, map, savedLabel, savedName, savedDesc)
+
+addMarker(savedPosition, map, savedLabel, savedName, savedDesc)
 }
 //{lat:cord[0], lng:cord[1]};
 

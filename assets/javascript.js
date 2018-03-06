@@ -10,7 +10,8 @@ var infoWindows = [];
 var image;
 var uniqueId = 0;
 var marker;
- var deleteID = 0;
+var deleteID = 0;
+
 function initMap() {
 
 
@@ -34,7 +35,7 @@ function initMap() {
     function addMarker(location, map, image, info) {
 
         //-------------    
-      
+
         //the query for the emojis. 
         var queryUrl = "https://www.emojidex.com/api/v1/utf_emoji/";
         var proxy = "https://cors-anywhere.herokuapp.com/";
@@ -88,7 +89,7 @@ function initMap() {
                 }
 
             }
-        
+
         });
 
         //---------
@@ -139,7 +140,7 @@ function initMap() {
 
         });
 
-        var contentString = 
+        var contentString =
             '<div id="namePin">' +
             '<form class="form-inline">' +
             '<divclass="input-group">' +
@@ -207,24 +208,24 @@ function initMap() {
             '<button type="submit" class="btn btn-danger btn-xs" id="delete"> Delete Location </button>';
 
 
-        
-            var infowindow = new google.maps.InfoWindow({
+
+        var infowindow = new google.maps.InfoWindow({
             content: contentString,
             maxWidth: 300,
-            // pixelOffset: new google.maps.Size(160,200)
+            
         });
 
         //always open popup div when marker is created
         infowindow.open(map, marker);
 
         marker.infowindow = infowindow
- 
-        google.maps.event.addListener(map, 'click', function() {
-        infowindow.close();
-      });
-  
+
+        google.maps.event.addListener(map, 'click', function () {
+            infowindow.close();
+        });
+
     }
-   
+
 
     //when save inside infowindow is clicked
     $(document).on("click", "#pinName", function () {
@@ -246,65 +247,56 @@ function initMap() {
         marker.info.push(pinName, description);
 
         
+        //Push item to local storage
         localStorage.setItem('pinName', pinName);
         localStorage.setItem('description', description);
         localStorage.setItem('marker.label', marker.label);
         localStorage.setItem('marker.position', marker.position);
-        
+
         //localStorage.setItem('marker', pinName + description + marker.label + marker.position);
 
-       // localStorage.setItem('markers', markers);
+        // localStorage.setItem('markers', markers);
 
-         
+
     });
-    
-    
-   
 
+    //get items from local storage
+    var savedName = localStorage.getItem('pinName');
+    console.log(savedName);
+    var savedDesc = localStorage.getItem('description');
+    console.log(savedDesc);
+    var savedLabel = localStorage.getItem('marker.label');
+    console.log(savedLabel);
+    var savedPosition = localStorage.getItem('marker.position');
+    savedPosition = savedPosition.replace('(', '');
+    savedPosition = savedPosition.replace(')', '');
+    savedPosition = savedPosition.split(",")
 
-  
-var savedName = localStorage.getItem('pinName');
-  console.log(savedName);
-  var savedDesc = localStorage.getItem('description');
-  console.log(savedDesc);
-  var savedLabel = localStorage.getItem('marker.label');
-  console.log(savedLabel);
-  var savedPosition = localStorage.getItem('marker.position');
-  savedPosition= savedPosition.replace('(','');
-  savedPosition= savedPosition.replace(')','');
-  savedPosition = savedPosition.split(",")
+    var lat = parseFloat(savedPosition[0])
+    var long = parseFloat(savedPosition[1])
 
-  var lat = parseFloat(savedPosition[0])
-  var long =  parseFloat(savedPosition[1])
+    savedPosition = { lat: lat, lng: long };
 
- savedPosition = {lat:lat, lng:long};
+    console.log(lat);
+    console.log(long);
+    console.log(localStorage)
 
- console.log(lat);
- console.log(long);
- console.log(localStorage)
-
- //push the pin name and description to marker info
-
-
-addMarker(savedPosition, map, savedLabel, savedName, savedDesc)
+    //call function to create marker from local storage
+    //addMarker(savedPosition, map, savedLabel, savedName, savedDesc)
 }
-//{lat:cord[0], lng:cord[1]};
 
- $(document).on("click", "#delete", function () {
+//delete marker function 
+$(document).on("click", "#delete", function () {
     event.preventDefault()
-    
-                // get this marker, then find it in array and take it away from array. 
-                var index = $(this).attr("data");
-                 markers[index].setMap(null) 
-                 console.log(markers);
-            
-           
-    });
 
- // this deletes one marker. we need to change the event listener
-       // google.maps.event.addListener(marker, 'click', function (event) {
-          //  this.setMap(null);
-        //});
+    // get this marker, then find it in array and take it away from array. 
+    var index = $(this).attr("data");
+    markers[index].setMap(null)
+    console.log(markers);
+
+
+});
+
 
     //---------- GEO LOCATION 
 

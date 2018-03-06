@@ -31,6 +31,7 @@ body {
 .setEmoji {
     display: inline-block;
     font-size: 20px;
+
 }
 
 .form-control::-webkit-input-placeholder {
@@ -98,4 +99,6 @@ body {
 	border: 2px solid #ADD7D4;
 	width: 45%;
 	float: right;
+
 }
+

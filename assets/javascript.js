@@ -274,7 +274,7 @@ function initMap() {
   parseInt(savedPosition[0])
   parseInt(savedPosition[1])
 
-  
+  console.log(savedPosition[0])
  savedPosition = {lat:savedPosition[0], lng:savedPosition[1]};
 
  console.log(savedPosition);
@@ -283,7 +283,7 @@ function initMap() {
  //push the pin name and description to marker info
 
  
-addMarker(savedPosition, map, savedLabel, savedName, savedDesc)
+//addMarker(savedPosition, map, savedLabel, savedName, savedDesc)
 }
 //{lat:cord[0], lng:cord[1]};
 

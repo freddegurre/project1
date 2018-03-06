@@ -2,31 +2,58 @@
 /* Always set the map height explicitly to define the size of the div
 * element that contains the map. */
 
-
-
 .header {
     text-align: center;
-    font-size: 50px;
+    text-shadow: 3px 3px 2px white;
+    color: black;
+    font-size: 40px;
     font-weight: bold;
-    padding-top: 6px;
-    height: 72px;
-    background-image: url("images/paper.jpg");
+    height: 60px;
+    background-image: url("images/rainbow3.jpg");
     /* background-size: 20%, 30%; */
     /* background-repeat: no-repeat, no-repeat; */
     width: 100%;
-    border: 4px solid rgb(119, 72, 45);
-    font-family: 'Condiment', cursive;
+    border-bottom: 3px solid black;
+    font-family: 'Slackey', cursive;
     position: fixed;
     top: 0;
     z-index: 999;
     background-position: top;
     background-size: 100%;
     background-repeat: no-repeat;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+#dropdownMenu1 {
+    background-image: url("images/btn-color.jpg");
+    background-position: top;
+    color: black;
+    font-weight: bold;
+    border-bottom: 2px solid black;
+    border-right: 2px solid black;
+}
+
+#pinName {
+    background-image: url("images/green.jpg");
+    background-position: center;
+    color: black;
+    font-weight: bold;
+    border-bottom: 2px solid black;
+    border-right: 2px solid black;
+}
+
+#delete {
+    background-image: url("images/red.jpg");
+    color: black;
+    font-weight: bold;
+    border-bottom: 2px solid black;
+    border-right: 2px solid black;
 }
 
 #map {
     height: 100%;
-    top: 72px;
+    top: 55px;
 }
 
 /* Optional: Makes the sample page fill the window. */
@@ -48,6 +75,10 @@ body {
     text-decoration: underline;
 }
 
+/* .abstractEmoji {
+    display: none;
+} */
+
 .abstract,
 .faces,
 .food,
@@ -59,13 +90,14 @@ body {
 .transportation {
     font-weight: bold;
     text-decoration: underline;
+    background-color: rgb(224, 204, 247);
 }
 
 #pinName {
     margin-right: 10px;
 }
 
-.footer {
+/* .footer {
     font-weight: bold;
     font-size: 18px;
     left: 0;
@@ -78,4 +110,14 @@ body {
     text-align: center;
     border: 4px solid rgb(119, 72, 45);
     font-family: Arial, Helvetica, sans-serif;
+} */
+
+@media only screen and (max-width: 450px) {
+    .header {
+        font-size: 30px;
+        height: 45px;
+    }
+    #map {
+        top: 45px;
+    }
 }

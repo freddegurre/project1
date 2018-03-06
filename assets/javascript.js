@@ -52,32 +52,32 @@ function initMap() {
                         //check if there is actual emoji in the response
                         if (results[i].moji) {
                             if(results[i].category === "abstract"){
-                                $(".abstract").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
+                                $(".abstract").append("<div class='setEmoji abstractEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
                             }
                             if(results[i].category === "faces"){
-                                $(".faces").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
+                                $(".faces").append("<div class='setEmoji facesEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
                             }
                             if(results[i].category === "food"){
                                 // console.log("yay food ", results[i].moji)
-                                $(".food").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
+                                $(".food").append("<div class='setEmoji foodEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
                             }
                             if(results[i].category === "nature"){
-                                $(".nature").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
+                                $(".nature").append("<div class='setEmoji natureEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
                             }
                             if(results[i].category === "objects"){
-                                $(".objects").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
+                                $(".objects").append("<div class='setEmoji objectsEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
                             }
                             if(results[i].category === "places"){
-                                $(".places").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
+                                $(".places").append("<div class='setEmoji placesEMoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
                             }
                             if(results[i].category === "symbols"){
-                                $(".symbols").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
+                                $(".symbols").append("<div class='setEmoji symbolsEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
                             }
                             if(results[i].category === "tools"){
-                                $(".tools").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
+                                $(".tools").append("<div class='setEmoji toolsEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
                             }
                             if(results[i].category === "transportation"){
-                                $(".transportation").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
+                                $(".transportation").append("<div class='setEmoji transportationEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
                             }
 
                             // if(results[i].category === "food"){
@@ -123,8 +123,17 @@ function initMap() {
 
         });
 
-        //when anything on page with calass .setEmoji is clicked
+        //when any attribute in the infoWindow is clicked
+        // $("p").on("click", "#abstractClick", function (event) {
+        //     event.preventDefault();
+        //     console.log("abstract is clicked")
+        //     $(".abstractEmoji").css("display", "inline-block");
+        // });
+
+
+        //when anything on page with class: .setEmoji is clicked
         $(document).on("click", ".setEmoji", function () {
+            console.log("emoji is clicked")
             //store value in the image var. 
             image = $(this).attr("data-emoji");
 
@@ -174,7 +183,7 @@ function initMap() {
         '<br>' +
         '<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">' +
             '<li>' +
-                '<div class="emojiBox">' +
+                '<div class= "emojiBox">' +
                 '<div class= "abstract">Abstract' +
                 '<br>' +
                 '</div>' +
@@ -223,26 +232,13 @@ function initMap() {
 
     var infowindow = new google.maps.InfoWindow({
         content: contentString,
-        maxWidth: 500,
+        maxWidth: 250,
         // pixelOffset: new google.maps.Size(160,200)
     });
 
         //always open popup div when marker is created
         infowindow.open(map, marker);
-
-        marker.infowindow = infowindow  
-        
-    }
-
- //when save inside infowindow is clicked
- $(document).on("click", "#pinName", function (){
-            event.preventDefault()
-            //store the value that user input in the topic-input form
-            var pinName = $("#input").val().trim();
-            //store the value of description in variable
-            var description = $("#description").val().trim();
-            //hide description form
-            $("#description").hide();
++
             //push the name to popup 
             $("#namePin").html("<h2>" + pinName + "</h2>");
             //change the subheader to be the actual description written
@@ -260,7 +256,7 @@ function initMap() {
             localStorage.setItem('description', description);
             localStorage.setItem('marker.label', marker.label);
             localStorage.setItem('marker.position', marker.position);
-        }); 
+        }; 
 
    }
      
@@ -303,4 +299,4 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         'Error: The Geolocation service failed.' :
         'Error: Your browser doesn\'t support geolocation.');
     infoWindow.open(map);
-}
+}*/

@@ -12,9 +12,10 @@ var uniqueId = 0;
 var marker;
 var deleteID = 0;
 
+
 function initMap() {
 
-
+	
     // Styles a map in night mode.
     map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 40.674, lng: -73.945 },
@@ -143,7 +144,7 @@ function initMap() {
         var contentString =
             '<div id="namePin">' +
             '<form class="form-inline">' +
-            '<divclass="input-group">' +
+            '<div class="input-group">' +
             '<input type="text" class="form-control" id="input" placeholder="Location Title">' +
             '</div>' +
             '</form>' +
@@ -204,8 +205,8 @@ function initMap() {
             '<div id="bodyContent">' +
             '</div>' +
             '<br>' +
-            '<button type="submit" class="btn btn-primary btn-xs" id="pinName"> Save Location </button>' +
-            '<button type="submit" class="btn btn-danger btn-xs" id="delete"> Delete Location </button>';
+            '<button type="submit" class="btn btn-primary btn-xs" id="pinName"> Save</button>' +
+            '<button type="submit" class="btn btn-danger btn-xs" id="delete"> Delete</button>';
 
 
 

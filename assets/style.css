@@ -2,8 +2,6 @@
 /* Always set the map height explicitly to define the size of the div
 * element that contains the map. */
 
-
-
 .header {
     font-weight: bold;
     height: 50px;
@@ -33,6 +31,20 @@ body {
 .setEmoji {
     display: inline-block;
     font-size: 20px;
+
+}
+
+.form-control::-webkit-input-placeholder {
+    color:black;
+}
+
+.form-control {
+    color: black;
+}
+
+#dropdownMenu1 {
+    background-color: rgb(255,204,33);
+    color: black;
 }
 
 .abstract {
@@ -51,26 +63,12 @@ body {
 .transportation {
     font-weight: bold;
     text-decoration: underline;
-}
-
-
-.footer {
-    font-weight: normal;
-    font-size: 12px;
-    bottom: 0;
-    padding: 27px 0 0 0;
-    width: 100%;
-    height: 50px;
-    color: black;
-    text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
-	z-index: 9999999999999;
+    background-color: rgb(238, 238, 238);
 }
 
 .input-group {
 	width: 100%;
 }
-
 
 .dropdown-toggle {
 	border: 2px solid #ADD7D4;
@@ -79,7 +77,11 @@ body {
 }
 
 #namePin {
-	color: #366DBB;
+	color: white;
+}
+
+#delete {
+    color: white;
 }
 
 .form-control {
@@ -97,4 +99,6 @@ body {
 	border: 2px solid #ADD7D4;
 	width: 45%;
 	float: right;
+
 }
+

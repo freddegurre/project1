@@ -8,9 +8,9 @@ var map;
 var infowindow;
 var infoWindows = [];
 var image;
-var uniqueId = 1;
+var uniqueId = 0;
 var marker;
-
+ var deleteID = 0;
 function initMap() {
 
 
@@ -241,6 +241,8 @@ function initMap() {
         $(".subHeader").html("<h5>" + description + "</h5>");
         $("#description").hide()
         $("#pinName").hide()
+        $("#delete").attr("data", deleteID);
+        deleteID++;
         marker.info.push(pinName, description);
 
         
@@ -257,25 +259,7 @@ function initMap() {
     });
     
     
-    $(document).on("click", "#delete", function () {
-    event.preventDefault()
-    
-
-            function DeleteMarker(id) {
-                //Find and remove the marker from the Array
-                for (var i = 0; i < markers.length; i++) {
-                    if (markers[i].id == id) {
-                        //Remove the marker from Map                  
-                        markers[i].setMap(null);
-        
-                        //Remove the marker from array.
-                        markers.splice(i, 1);
-
-                    }
-                }
-            };
-            DeleteMarker();
-    });
+   
 
 
   
@@ -306,7 +290,16 @@ addMarker(savedPosition, map, savedLabel, savedName, savedDesc)
 }
 //{lat:cord[0], lng:cord[1]};
 
-
+ $(document).on("click", "#delete", function () {
+    event.preventDefault()
+    
+                // get this marker, then find it in array and take it away from array. 
+                var index = $(this).attr("data");
+                 markers[index].setMap(null) 
+                 console.log(markers);
+            
+           
+    });
 
  // this deletes one marker. we need to change the event listener
        // google.maps.event.addListener(marker, 'click', function (event) {

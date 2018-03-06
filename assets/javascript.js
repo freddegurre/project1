@@ -152,7 +152,7 @@ function initMap() {
             '<br>' +
             '<div class="subHeader">' +
             '</div>' +
-            '<textarea class="form-control" id="description" rows="3"></textarea>' +
+            '<textarea class="form-control" id="description" placeholder="Notes" rows="3"></textarea>' +
             '<br>' +
             '<div class="dropdown">' +
             '<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">' +

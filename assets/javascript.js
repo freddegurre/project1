@@ -26,14 +26,15 @@ function initMap() {
     google.maps.event.addListener(map, 'click', function (event) {
         addMarker(event.latLng, map);
         console.log(event.latLng.lat);
-        map.setCenter(event.latLng);
+        //map.setCenter(event.latLng);
 
     });
 
     // Adds a marker to the map.
     function addMarker(location, map, image, info) {
 
-        //-------------
+        //-------------    
+      
         //the query for the emojis. 
         var queryUrl = "https://www.emojidex.com/api/v1/utf_emoji/";
         var proxy = "https://cors-anywhere.herokuapp.com/";
@@ -231,8 +232,13 @@ function initMap() {
         infowindow.open(map, marker);
 
         marker.infowindow = infowindow
-
+ 
+        google.maps.event.addListener(map, 'click', function() {
+        infowindow.close();
+      });
+  
     }
+   
 
     //when save inside infowindow is clicked
     $(document).on("click", "#pinName", function () {
@@ -260,7 +266,9 @@ function initMap() {
     });
 
   
-    var savedName = localStorage.getItem('pinName');
+    
+  
+    /*var savedName = localStorage.getItem('pinName');
   console.log(savedName);
   var savedDesc = localStorage.getItem('description');
   console.log(savedDesc);
@@ -277,7 +285,7 @@ function initMap() {
   console.log(savedPosition[0])
  savedPosition = {lat:savedPosition[0], lng:savedPosition[1]};
 
- console.log(savedPosition);
+ console.log(savedPosition);*/
 
 
  //push the pin name and description to marker info
@@ -326,4 +334,7 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         'Error: The Geolocation service failed.' :
         'Error: Your browser doesn\'t support geolocation.');
     infoWindow.open(map);
-}*/
+}
+google.maps.event.addListener(marker,"click",function(){
+        if(infowindow)infowindow.close(this.InfoWindow);
+    });*/

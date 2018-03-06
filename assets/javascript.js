@@ -109,12 +109,13 @@ function initMap() {
 
         //create a new marker. 
         marker = new google.maps.Marker({
+            animation: google.maps.Animation.DROP,
             position: location,
-            label: image,
-            // label: {
-            //     text: image,
-            //     fontSize: "30px"
-            // },
+            //label: image,
+            label: {
+                text: image,
+                fontSize: "30px"
+            },
             map: map,
             icon: marker,
             customInfo: uniqueId,
@@ -222,7 +223,8 @@ function initMap() {
             '<button type="submit" class="btn btn-danger btn-xs" id="delete"> Delete Location </button>';
 
 
-        var infowindow = new google.maps.InfoWindow({
+        
+            var infowindow = new google.maps.InfoWindow({
             content: contentString,
             maxWidth: 500,
             // pixelOffset: new google.maps.Size(160,200)
@@ -264,9 +266,29 @@ function initMap() {
         localStorage.setItem('marker.position', marker.position);
          
     });
-
-  
     
+    
+    $(document).on("click", "#delete", function () {
+    event.preventDefault()
+    
+
+            function DeleteMarker(id) {
+                //Find and remove the marker from the Array
+                for (var i = 0; i < markers.length; i++) {
+                    if (markers[i].id == id) {
+                        //Remove the marker from Map                  
+                        markers[i].setMap(null);
+        
+                        //Remove the marker from array.
+                        markers.splice(i, 1);
+
+                    }
+                }
+            };
+            DeleteMarker();
+    });
+
+
   
     /*var savedName = localStorage.getItem('pinName');
   console.log(savedName);
@@ -294,7 +316,6 @@ function initMap() {
 //addMarker(savedPosition, map, savedLabel, savedName, savedDesc)
 }
 //{lat:cord[0], lng:cord[1]};
-
 
 
 

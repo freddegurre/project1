@@ -33,7 +33,6 @@ body {
 .setEmoji {
     display: inline-block;
     font-size: 20px;
-	padding: 10px;
 }
 
 .abstract {
@@ -98,8 +97,4 @@ body {
 	border: 2px solid #ADD7D4;
 	width: 45%;
 	float: right;
-}
-
-.emojiBox {
-	
 }

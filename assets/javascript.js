@@ -12,7 +12,6 @@ var uniqueId = 0;
 var marker;
 var deleteID = 0;
 
-
 function initMap() {
 
 	
@@ -23,7 +22,7 @@ function initMap() {
 
     });
 
-
+	
     // This event listener calls addMarker() when the map is clicked.
     google.maps.event.addListener(map, 'click', function (event) {
         addMarker(event.latLng, map);
@@ -31,10 +30,9 @@ function initMap() {
         //map.setCenter(event.latLng);
 
     });
-
     // Adds a marker to the map.
     function addMarker(location, map, image, info) {
-
+var iconBase = 'https://i.imgur.com/CoiFeTy.png';
         //-------------    
 
         //the query for the emojis. 
@@ -105,7 +103,7 @@ function initMap() {
                 fontSize: "30px"
             },
             map: map,
-            icon: marker,
+            icon: 'https://i.imgur.com/CoiFeTy.png',
             customInfo: uniqueId,
             info: []
             

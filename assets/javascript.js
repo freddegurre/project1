@@ -181,7 +181,7 @@ function initMap() {
 
         var infowindow = new google.maps.InfoWindow({
             content: contentString,
-            maxWidth: 300,
+            maxWidth: 240,
 
         });
 

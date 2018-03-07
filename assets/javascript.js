@@ -11,6 +11,9 @@ var image;
 var uniqueId = 0;
 var marker;
 var deleteID = 0;
+var rascal = '<div style="color: rgb(0, 0, 0); font-size: 30px; margin-bottom: 20px; font-family: Roboto, Arial, sans-serif;">';
+var xrascal = '</div>'
+
 
 function initMap() {
 
@@ -32,7 +35,7 @@ function initMap() {
     });
     // Adds a marker to the map.
     function addMarker(location, map, image, info) {
-var iconBase = 'https://i.imgur.com/CoiFeTy.png';
+		var iconBase = 'https://i.imgur.com/CoiFeTy.png';
         //-------------    
 
         //the query for the emojis. 
@@ -103,7 +106,7 @@ var iconBase = 'https://i.imgur.com/CoiFeTy.png';
                 fontSize: "30px"
             },
             map: map,
-            icon: 'https://i.imgur.com/CoiFeTy.png',
+            icon: 'https://i.imgur.com/qnkW5nH.png',
             customInfo: uniqueId,
             info: []
 
@@ -113,8 +116,9 @@ var iconBase = 'https://i.imgur.com/CoiFeTy.png';
 
         //when anything on page with calass .setEmoji is clicked
         $(document).on("click", ".setEmoji", function () {
-            //store value in the image var. 
+			//store value in the image var. 
             image = $(this).attr("data-emoji");
+					$(this).css("font-size", "30px");								 
 
             //function to update label of current marker label
             function updateLabel() {
@@ -125,6 +129,7 @@ var iconBase = 'https://i.imgur.com/CoiFeTy.png';
 
             }
             updateLabel();
+
         });
 
         // add one to unique id so that next marker get its own id.
@@ -296,6 +301,10 @@ $(document).on("click", "#delete", function () {
 
 });
 
+$('div:contains(image)').replace( image, rascal + image + xrascal);
+								 
+								 
+								 
 
     //---------- GEO LOCATION 
 

@@ -116,7 +116,7 @@ var iconBase = 'https://i.imgur.com/CoiFeTy.png';
                 fontSize: "30px"
             },
             map: map,
-            icon: 'https://i.imgur.com/CoiFeTy.png',
+            icon: 'https://i.imgur.com/qIi2Mww.png',
             customInfo: uniqueId,
             info: []
 

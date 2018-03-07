@@ -32,7 +32,7 @@ function initMap() {
     });
     // Adds a marker to the map.
     function addMarker(location, map, image, info) {
-var iconBase = 'https://i.imgur.com/CoiFeTy.png';
+
         //-------------    
 
         //the query for the emojis. 
@@ -99,8 +99,9 @@ var iconBase = 'https://i.imgur.com/CoiFeTy.png';
             position: location,
             //label: image,
             label: {
+                fontSize: "30px",
                 text: image,
-                fontSize: "30px"
+                
             },
             map: map,
             icon: 'https://i.imgur.com/CoiFeTy.png',
@@ -115,7 +116,10 @@ var iconBase = 'https://i.imgur.com/CoiFeTy.png';
         $(document).on("click", ".setEmoji", function () {
             //store value in the image var. 
             image = $(this).attr("data-emoji");
-
+            $(this).css({
+                fontSize: "30px"
+            });
+             
             //function to update label of current marker label
             function updateLabel() {
                 // set the label to be chosen emoji
@@ -205,6 +209,7 @@ var iconBase = 'https://i.imgur.com/CoiFeTy.png';
             '<br>' +
             '<button type="submit" class="btn btn-primary btn-xs" id="pinName"> Save</button>' +
             '<button type="submit" class="btn btn-danger btn-xs" id="delete"> Delete</button>';
+           
 
 
 

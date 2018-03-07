@@ -53,12 +53,7 @@ var iconBase = 'https://i.imgur.com/CoiFeTy.png';
 
                 //check if there is actual emoji in the response
                 if (results[i].moji) {
-                    // if (results[i].category === "people") {
-                    //     $(".people").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
-                    // }
-                    // if (results[i].category === "faces") {
-                    //     $(".faces").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
-                    // }
+                    
                     if (results[i].category === "food") {
                         // console.log("yay food ", results[i].moji)
                         $(".food").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
@@ -178,13 +173,6 @@ var iconBase = 'https://i.imgur.com/CoiFeTy.png';
             '<div class= "tools">Tools' +
             '<br>' +
             '</div>' +
-            // '<div class= "people">People' +
-            // '<br>' +
-            // '</div>' +
-            // '<br>' +
-            // '<div class= "faces">Faces' +
-            // '<br>' +
-            // '</div>' +
             '</li>' +
             '</ul>' +
             '</div>' +

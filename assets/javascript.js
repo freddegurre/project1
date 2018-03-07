@@ -1,8 +1,6 @@
 
 //google maps api key AIzaSyD7b6YGD2VKhvICqzlYp3rvpn-V54UMP3Y
 
-//var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-//var labelIndex = 0;
 var markers = [];
 var map;
 var infowindow;
@@ -11,10 +9,11 @@ var image;
 var uniqueId = 0;
 var marker;
 var deleteID = 0;
+var saveID = 0;
 
 function initMap() {
 
-	
+
     // Styles a map in night mode.
     map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 40.674, lng: -73.945 },
@@ -22,7 +21,7 @@ function initMap() {
 
     });
 
-	
+
     // This event listener calls addMarker() when the map is clicked.
     google.maps.event.addListener(map, 'click', function (event) {
         addMarker(event.latLng, map);
@@ -30,10 +29,10 @@ function initMap() {
         //map.setCenter(event.latLng);
 
     });
+
     // Adds a marker to the map.
     function addMarker(location, map, image, info) {
-var iconBase = 'https://i.imgur.com/CoiFeTy.png';
-        //-------------    
+
 
         //the query for the emojis. 
         var queryUrl = "https://www.emojidex.com/api/v1/utf_emoji/";
@@ -53,7 +52,7 @@ var iconBase = 'https://i.imgur.com/CoiFeTy.png';
 
                 //check if there is actual emoji in the response
                 if (results[i].moji) {
-                    
+
                     if (results[i].category === "food") {
                         // console.log("yay food ", results[i].moji)
                         $(".food").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
@@ -80,23 +79,18 @@ var iconBase = 'https://i.imgur.com/CoiFeTy.png';
 
         });
 
-        //---------
-
         //create a new marker. 
         marker = new google.maps.Marker({
             animation: google.maps.Animation.DROP,
             position: location,
-            //label: image,
             label: {
                 text: image,
-                fontSize: "30px"
+                fontSize: "30px",
             },
             map: map,
-            icon: 'https://i.imgur.com/CoiFeTy.png',
+            icon: 'https://i.imgur.com/qnkW5nH.png',
             customInfo: uniqueId,
             info: []
-
-
         });
 
 
@@ -113,14 +107,15 @@ var iconBase = 'https://i.imgur.com/CoiFeTy.png';
                 image = "";
 
             }
+
             updateLabel();
         });
+
 
         // add one to unique id so that next marker get its own id.
         uniqueId++;
         //push the marker to array of markers. 
         markers.push(marker);
-
 
         //this opens popup when marker is clicked. 
         marker.addListener('click', function () {
@@ -137,7 +132,7 @@ var iconBase = 'https://i.imgur.com/CoiFeTy.png';
             '</form>' +
             '</div>' +
             '<br>' +
-            '<div class="subHeader">' +
+            '<div id="subHeader">' +
             '</div>' +
             '<textarea class="form-control" id="description" placeholder="Notes" rows="3"></textarea>' +
             '<br>' +
@@ -179,17 +174,18 @@ var iconBase = 'https://i.imgur.com/CoiFeTy.png';
             '<div id="bodyContent">' +
             '</div>' +
             '<br>' +
-            '<button type="submit" class="btn btn-primary btn-xs" id="pinName"> Save</button>' +
-            '<button type="submit" class="btn btn-danger btn-xs" id="delete"> Delete</button>';
-
+            '<div id="buttons">' +
+            '<button type="submit" class="save btn btn-primary btn-xs" data= "' + saveID + '"> Save</button>' +
+            '</div>'
 
 
         var infowindow = new google.maps.InfoWindow({
             content: contentString,
             maxWidth: 300,
-            
+
         });
 
+        saveID++;
         //always open popup div when marker is created
         infowindow.open(map, marker);
 
@@ -201,10 +197,10 @@ var iconBase = 'https://i.imgur.com/CoiFeTy.png';
 
     }
 
-
     //when save inside infowindow is clicked
-    $(document).on("click", "#pinName", function () {
+    $(document).on("click", ".save", function () {
         event.preventDefault()
+
         //store the value that user input in the topic-input form
         var pinName = $("#input").val().trim();
         //store the value of description in variable
@@ -214,29 +210,81 @@ var iconBase = 'https://i.imgur.com/CoiFeTy.png';
         //push the name to popup 
         $("#namePin").html("<h2>" + pinName + "</h2>");
         //change the subheader to be the actual description written
-        $(".subHeader").html("<h5>" + description + "</h5>");
+        $("#subHeader").html("<h5>" + description + "</h5>");
         $("#description").hide()
-        $("#pinName").hide()
-        $("#delete").attr("data", deleteID);
+        $("#buttons").html('<button type="submit" class="delete btn btn-danger btn-xs"> Delete</button>');
+        $(".delete").attr("data", deleteID);
         deleteID++;
         marker.info.push(pinName, description);
+        // eq(indexS)
 
-        
-        //Push item to local storage
-        localStorage.setItem('pinName', pinName);
+    });
+
+
+}
+
+//delete marker function 
+$(document).on("click", ".delete", function () {
+    event.preventDefault()
+
+    // get this marker, then find it in array and take it away from array. 
+    var index = $(this).attr("data");
+    markers[index].setMap(null)
+    console.log(markers);
+//hey
+
+});
+
+
+    //---------- GEO LOCATION 
+
+    // Try HTML5 geolocation.
+if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+
+            map.setCenter(pos);
+        }, function () {
+            handleLocationError(true, infoWindow, map.getCenter());
+        });
+    } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, map.getCenter());
+    }
+
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(browserHasGeolocation ?
+        'Error: The Geolocation service failed.' :
+        'Error: Your browser doesn\'t support geolocation.');
+    infoWindow.open(map);
+}
+
+
+
+
+
+
+
+//------------CODE Grave yard LOCAL STORAGE
+
+    //Push item to local storage
+       /* localStorage.setItem('pinName', pinName);
         localStorage.setItem('description', description);
         localStorage.setItem('marker.label', marker.label);
-        localStorage.setItem('marker.position', marker.position);
+        localStorage.setItem('marker.position', marker.position);*/
 
         //localStorage.setItem('marker', pinName + description + marker.label + marker.position);
 
         // localStorage.setItem('markers', markers);
 
 
-    });
-
-    //get items from local storage
-    var savedName = localStorage.getItem('pinName');
+        //get items from local storage
+   /* var savedName = localStorage.getItem('pinName');
     console.log(savedName);
     var savedDesc = localStorage.getItem('description');
     console.log(savedDesc);
@@ -257,54 +305,4 @@ var iconBase = 'https://i.imgur.com/CoiFeTy.png';
     console.log(localStorage)
 
     //call function to create marker from local storage
-    //addMarker(savedPosition, map, savedLabel, savedName, savedDesc)
-}
-
-//delete marker function 
-$(document).on("click", "#delete", function () {
-    event.preventDefault()
-
-    // get this marker, then find it in array and take it away from array. 
-    var index = $(this).attr("data");
-    markers[index].setMap(null)
-    console.log(markers);
-
-
-});
-
-
-    //---------- GEO LOCATION 
-
-    // Try HTML5 geolocation.
-   /* if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            var pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
-
-            infoWindow.setPosition(pos);
-            infoWindow.setContent('Curret location.');
-            infoWindow.open(map);
-            map.setCenter(pos);
-        }, function () {
-            handleLocationError(true, infoWindow, map.getCenter());
-        });
-    } else {
-        // Browser doesn't support Geolocation
-        handleLocationError(false, infoWindow, map.getCenter());
-    }
-
-}
-
-
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-    infoWindow.setPosition(pos);
-    infoWindow.setContent(browserHasGeolocation ?
-        'Error: The Geolocation service failed.' :
-        'Error: Your browser doesn\'t support geolocation.');
-    infoWindow.open(map);
-}
-google.maps.event.addListener(marker,"click",function(){
-        if(infowindow)infowindow.close(this.InfoWindow);
-    });*/
+    //addMarker(savedPosition, map, savedLabel, savedName, savedDesc)*/

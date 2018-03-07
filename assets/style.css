@@ -52,15 +52,14 @@ body {
     text-decoration: underline;
 }
 
-.abstract,
-.faces,
+.places,
 .food,
+.transportation,
 .nature,
 .objects,
-.places,
-.symbols,
-.tools,
-.transportation {
+/* .people, */
+/* .faces, */
+.tools {
     font-weight: bold;
     text-decoration: underline;
     background-color: rgb(238, 238, 238);
@@ -75,7 +74,6 @@ body {
 	width: 100%;
 	color: #ADD7D4;
 }
-
 
 #delete {
     color: white;

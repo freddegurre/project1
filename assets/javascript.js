@@ -53,12 +53,12 @@ var iconBase = 'https://i.imgur.com/CoiFeTy.png';
 
                 //check if there is actual emoji in the response
                 if (results[i].moji) {
-                    if (results[i].category === "abstract") {
-                        $(".abstract").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
-                    }
-                    if (results[i].category === "faces") {
-                        $(".faces").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
-                    }
+                    // if (results[i].category === "people") {
+                    //     $(".people").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
+                    // }
+                    // if (results[i].category === "faces") {
+                    //     $(".faces").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
+                    // }
                     if (results[i].category === "food") {
                         // console.log("yay food ", results[i].moji)
                         $(".food").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
@@ -72,18 +72,12 @@ var iconBase = 'https://i.imgur.com/CoiFeTy.png';
                     if (results[i].category === "places") {
                         $(".places").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
                     }
-                    if (results[i].category === "symbols") {
-                        $(".symbols").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
-                    }
                     if (results[i].category === "tools") {
                         $(".tools").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
                     }
                     if (results[i].category === "transportation") {
                         $(".transportation").append("<div class='setEmoji' data-emoji='" + results[i].moji + "'>" + results[i].moji);
                     }
-
-
-
 
                 }
 
@@ -161,11 +155,11 @@ var iconBase = 'https://i.imgur.com/CoiFeTy.png';
             '<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">' +
             '<li>' +
             '<div class="emojiBox">' +
-            '<div class= "abstract">Abstract' +
+            '<div class= "places">Places' +
             '<br>' +
             '</div>' +
             '<br>' +
-            '<div class= "faces">Faces' +
+            '<div class= "transportation">Transportation' +
             '<br>' +
             '</div>' +
             '<br>' +
@@ -181,22 +175,16 @@ var iconBase = 'https://i.imgur.com/CoiFeTy.png';
             '<br>' +
             '</div>' +
             '<br>' +
-            '<div class= "places">Places' +
-            '<br>' +
-            '</div>' +
-            '<br>' +
-            '<div class= "symbols">Symbols' +
-            '<br>' +
-            '</div>' +
-            '<br>' +
             '<div class= "tools">Tools' +
             '<br>' +
             '</div>' +
-            '<br>' +
-            '<div class= "transportation">Transportation' +
-            '<br>' +
-            '</div>' +
-            '<br>' +
+            // '<div class= "people">People' +
+            // '<br>' +
+            // '</div>' +
+            // '<br>' +
+            // '<div class= "faces">Faces' +
+            // '<br>' +
+            // '</div>' +
             '</li>' +
             '</ul>' +
             '</div>' +
